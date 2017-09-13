@@ -1,0 +1,42 @@
+{
+  "name": "nanodegree-reddit-homework-pm",
+  "version": "1.0.0",
+  "description": "Nano degree homework #2 for react | redux",
+  "main": "index.js",
+  "keywords": [
+    "udacity",
+    "redux",
+    "readable",
+    "react",
+    "nanodegree"
+  ],
+  "author": "Pedro Muller",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "clone": "^2.1.1",
+    "cors": "^2.8.3",
+    "dotenv": "^4.0.0",
+    "ejs": "^2.5.7",
+    "express": "^4.15.2",
+    "glob": "^7.1.2",
+    "purecss": "^1.0.0",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-redux": "^5.0.5",
+    "react-router": "^4.1.1",
+    "react-router-dom": "4.1.1",
+    "redux": "^3.7.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-polyfill": "^6.26.0",
+    "css-loader": "^0.28.7",
+    "img-loader": "^2.0.0",
+    "url-loader": "^0.5.9",
+    "webpack": "^3.5.6",
+    "webpack-dev-middleware": "^1.12.0",
+    "webpack-hot-middleware": "^2.19.1"
+  }
+}
