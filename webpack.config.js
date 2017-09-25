@@ -1,4 +1,6 @@
-const webpack = require('webpack')
+const webpack = require('webpack');
+var path = require('path');
+
 module.exports = {
     context:__dirname,
     entry:  [
@@ -15,14 +17,9 @@ module.exports = {
     module: {
         loaders: [
             {
-                test: /\.js$/,
+                test: /\.(js|jsx)$/,
                 loader: 'babel-loader',
                 exclude: /node_modules/
-            },
-            {
-              test: /\.jsx$/,
-              loader: 'babel-loader',
-              exclude: /node_modules/
             },
             {
               test: /\.css$/,
@@ -34,9 +31,19 @@ module.exports = {
             },
             {
               test: /\.(jpe?g|png|gif|svg)$/i,
-              loader: "file-loader?name=app/images/[name].[ext]"
+              loader: "file-loader?name=public/images/[name].[ext]"
+            },
+            {
+              test: /react-icons\/(.)*(.js)$/,
+              loader: 'babel-loader',
+              include: path.resolve(__dirname, 'node_modules/react-icons')
             }
         ]
+    },
+    resolve:{
+      alias:{
+        images:path.resolve(__dirname, 'public/images')
+      }
     },
     plugins: [
       new webpack.HotModuleReplacementPlugin({
