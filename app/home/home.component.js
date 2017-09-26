@@ -1,16 +1,16 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import Question from '../question/index'
+import {connect} from 'react-redux'
 
-import Badge from '../shared/badge'
-import Categories from '../nav/categories'
-import UserList from '../nav/userList'
-import NewQuestion from '../question/new'
+import Question from '../question/question.component'
+import Badge from '../shared/badge.component'
+import Categories from '../nav/category.component'
+import UserList from '../nav/user.component'
+import NewQuestion from '../question/new.component'
 
-export default class Home extends React.Component {
+class Home extends React.Component {
   constructor(props){
     super(props);
-    this.state ={
+    this.state = {
       visible:false
     };
     this.toogleState = this.toogleState.bind(this);
@@ -23,6 +23,7 @@ export default class Home extends React.Component {
   }
 
   render() {
+    const {user} = this.props;
     return (
       <div className="content-wrapper">
         <div className="content">
@@ -32,7 +33,7 @@ export default class Home extends React.Component {
             </div>
             <div className="l-box pure-u-1 pure-u-md-2-6 pure-u-lg-3-5">
               <div className="l-box box">
-                <Badge initials="PM" name="Pedro Muller" />
+                <Badge color={user.color} initials={user.initials} name={user.name} />
                 <h2>
                   <a onClick={()=>this.toogleState()}>
                     What is your question?
@@ -56,5 +57,10 @@ export default class Home extends React.Component {
   }
 }
 
-Home.propTypes = {
-};
+function mapStateToProps(state){
+  return {
+    user:state.users.list[state.users.current]
+  }
+}
+
+export default connect(mapStateToProps)(Home);

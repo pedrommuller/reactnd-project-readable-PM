@@ -9,9 +9,6 @@ export default class Badge extends React.Component {
 
   render() {
     let {color,initials, name} = this.props;
-    if(!color){
-      color = '#'+Math.floor(Math.random()*16777215).toString(16)
-    }
 
     return (
       <div>
@@ -25,10 +22,12 @@ export default class Badge extends React.Component {
         <a href="#">{name}</a>
       </div>
     );
+
   }
 }
 
 Badge.propTypes = {
     initials: PropTypes.string.isRequired,
-    name:PropTypes.string.isRequired
+    name:PropTypes.string.isRequired,
+    color:PropTypes.string.isRequired
 };

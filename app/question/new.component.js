@@ -1,8 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Badge from '../shared/badge'
+import {connect} from 'react-redux'
 
-export default class New extends React.Component {
+import Badge from '../shared/badge.component'
+
+class New extends React.Component {
   constructor(props){
     super(props);
     this.props = props;
@@ -19,7 +21,7 @@ export default class New extends React.Component {
   }
 
   render() {
-    const {visible} = this.props;
+    const {visible,user} = this.props;
     const style ={};
     style.display = visible?'block':'none';
 
@@ -27,7 +29,7 @@ export default class New extends React.Component {
       <div id="myModal" style={style} className="modal">
         <div className="modal-content">
           <span onClick={this.props.close} className="close">&times;</span>
-          <Badge initials="PM" name="Pedro Muller" />
+          <Badge color={user.color} initials={user.initials} name={user.name} />
           <p>
             <textarea onChange={(e)=>this.handleTextchange(e)}>
             </textarea>
@@ -40,6 +42,14 @@ export default class New extends React.Component {
     );
   }
 }
+
+function mapStateToProps(state){
+  return {
+    user:state.users.list[state.users.current]
+  }
+}
+
+export default connect(mapStateToProps)(New);
 
 New.PropTypes = {
   visible:PropTypes.bool.isRequired,

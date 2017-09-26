@@ -5,7 +5,7 @@ module.exports = {
     context:__dirname,
     entry:  [
         'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-        './app/Index.js',
+        './app/index.js',
       ],
     output: {
         path: __dirname + '/public',
