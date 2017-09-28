@@ -1,36 +1,30 @@
 import React from 'react'
-import logo from 'images/logo-readable-2.png'
-import {FaHome,FaPencil, FaUser} from 'react-icons/lib/fa'
+import {connect} from 'react-redux'
 
-const Header = ()=>
+import logo from 'images/logo-readable-2.png'
+import {FaHome} from 'react-icons/lib/fa'
+
+import Badge from '../shared/badge.component.js'
+
+const Header = (props)=>
 (
   <div className="header">
     <div className="home-menu pure-menu pure-menu-horizontal">
-      <a href="">
-        <img src={logo} alt="logo" className="home-logo" />
-      </a>
+      <img src={logo} alt="logo" className="home-logo" />
 
       <ul className="pure-menu-list">
-          <li className="pure-menu-item pure-menu-selected">
-            <a href="#" className="pure-menu-link">
-              <FaHome size="24" />
-              Home
-            </a>
-          </li>
           <li className="pure-menu-item">
-            <a href="#" className="pure-menu-link">
-              <FaPencil alt="New Post" size="24" />
-              New Post
-            </a>
-          </li>
-          <li className="pure-menu-item">
-            <a href="#" className="pure-menu-link">
-              <FaUser size="24" alt="User" />John Doe
-            </a>
+            <Badge color={props.user.color} initials={props.user.initials} name="" />
           </li>
       </ul>
     </div>
   </div>
 );
 
-export default Header
+function mapStateToProps(state){
+  return {
+    user:state.users.list[state.users.current],
+  }
+}
+
+export default connect(mapStateToProps)(Header);

@@ -1,16 +1,16 @@
-const list =[
-  'Philosophy',
-  'What Are The Best Photographs of?',
-  'Suspendisse sodales',
-  'Pellentesque elementum',
-  'Other'
-]
-
 const initialState ={
-  list:list,
-  current:''
+  list:[],
 }
 
 export default function categories(state=initialState, action){
-  return state;
+  debugger;
+  switch (action.type) {
+    case 'GET_CATEGORIES':
+      return {
+        list:action.categories
+      }
+      break;
+    default:
+      return state;
+  }
 }

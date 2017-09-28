@@ -5,8 +5,9 @@ import '../public/app.css'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {Route}  from 'react-router-dom'
-import { createStore, combineReducers, applyMiddleware } from 'redux'
-import  {Provider} from 'react-redux'
+import {createStore, combineReducers, applyMiddleware } from 'redux'
+import {Provider} from 'react-redux'
+import thunk from 'redux-thunk';
 import createHistory from 'history/createBrowserHistory'
 import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux'
 
@@ -21,7 +22,7 @@ const store = createStore(
     router: routerReducer
   }),
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  applyMiddleware(middleware))
+  applyMiddleware(thunk,middleware))
 
 import Header from './shared/header.component'
 import Footer from './shared/footer.component'
@@ -32,7 +33,7 @@ ReactDOM.render(
      <ConnectedRouter history={history}>
        <div>
          <Header></Header>
-         <Route path="/" exact component={Home}></Route>
+         <Route path="/:category?" exact component={Home}></Route>
          <Footer></Footer>
        </div>
     </ConnectedRouter>

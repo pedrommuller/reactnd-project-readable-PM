@@ -1,35 +1,42 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {FaAngleUp, FaAngleDown} from 'react-icons/lib/fa'
+import TimeAgo from 'react-timeago'
 
-export default class Question extends React.Component {
+import IconArrowUp from './iconArrowUp'
+import IconArrowDown from './IconArrowDown'
+
+
+export default class Post extends React.Component {
   render() {
+    const {post} = this.props;
     return (
       <div className="l-box box">
           <div className="pure-u-1-5 ">
             <div className="question-arrows">
-              <FaAngleUp size="24" />
+              <IconArrowUp />
               <br/>
-              <FaAngleDown size="24" />
+              <IconArrowDown />
             </div>
             <div className="question-vote">
-              10 <br />
+              {post.voteScore} <br />
               votes
             </div>
           </div>
           <div className="pure-u-3-5">
             <span className="question-title">
-                How to add validation attribute conditionally based on other Model Property.
+                {post.title}
             </span><br/>
             <span className="question-body">
-              Everyone says so after all.
+              {post.body}
             </span>
-
+            <span className="question-category">
+              {post.category}
+            </span>
           </div>
           <div className="pure-u-1-5">
             <span className="question-info">
-              Asked by <a href="#">John doe</a>,<br />
-              10 mins ago.
+              Posted by <a href="#">{post.author}</a>,<br />
+              <TimeAgo date={post.timestamp} />
             </span>
           </div>
       </div>
@@ -38,5 +45,6 @@ export default class Question extends React.Component {
 }
 
 
-Question.propTypes = {
+Post.propTypes = {
+  post:PropTypes.object.isRequired
 };

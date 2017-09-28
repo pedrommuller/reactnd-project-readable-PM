@@ -1,8 +1,8 @@
 import React from 'react';
-import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
+import {Link} from 'react-router-dom'
 
-class Categories extends React.Component {
+export default class Categories extends React.Component {
   render() {
     return (
       <div>
@@ -11,8 +11,8 @@ class Categories extends React.Component {
         <ul>
           {
             this.props.list.map((e)=>
-              <li key={e}>
-                <a href="#">{e}</a>
+              <li key={e.path}>
+                <Link to={`/${e.path}`}>{e.name}</Link>
               </li>
             )
           }
@@ -22,13 +22,6 @@ class Categories extends React.Component {
   }
 }
 
-function mapStateToProps(state){
-    return {
-    'list':state.categories.list
-  };
-}
-
-export default connect(mapStateToProps)(Categories)
-
 Categories.propTypes = {
+  list:PropTypes.array.isRequired
 };

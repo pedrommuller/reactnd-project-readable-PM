@@ -1,8 +1,8 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import PropTypes from 'prop-types'
 import Badge from '../shared/badge.component'
 
-class UserList extends React.Component {
+export default class UserList extends React.Component {
   render() {
     const {list} = this.props;
     return (
@@ -26,10 +26,6 @@ class UserList extends React.Component {
   }
 }
 
-function mapStateToProps(state){
-    return {
-    'list':state.users.list
-  };
+UserList.PropTypes={
+  list:PropTypes.object.isRequired
 }
-
-export default connect(mapStateToProps)(UserList)

@@ -1,16 +1,16 @@
 const webpack = require('webpack');
 var path = require('path');
-
+console.log(__dirname);
 module.exports = {
     context:__dirname,
     entry:  [
         'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-        './app/index.js',
+         './app/index.js',
       ],
     output: {
-        path: __dirname + '/public',
-        publicPath:'/',
-        filename: 'bundle.js'
+        path: path.resolve(__dirname,'public'),
+        filename: 'bundle.js',
+        publicPath:'/'
     },
     target:'web',
     devtool:'#source-map',
