@@ -34,15 +34,13 @@ function getData (token) {
 }
 
 function getCountByParent(token,parentId){
-  return filterCommentsByParent.then(e=>e.length)
-}
-
-function filterCommentsByParent(parentId){
+  console.log('token ', token, ' parentId ', parentId );
   return new Promise((res) => {
     let comments = getData(token)
     let keys = Object.keys(comments)
     filtered_keys = keys.filter(key => comments[key].parentId === parentId && !comments[key].deleted)
-    res(filtered_keys.map(key => comments[key]))
+    console.log(filtered_keys.length);
+    res(filtered_keys.length)
   })
 }
 
@@ -138,5 +136,6 @@ module.exports = {
   vote,
   disableByParent,
   disable,
-  edit
+  edit,
+  getCountByParent
 }

@@ -1,10 +1,10 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {getCategories} from '../nav/category.actions'
+import {getHomeData} from './home.actions'
 
 import Badge from '../shared/badge.component'
 import Categories from '../nav/category.component'
-import UserList from '../nav/users.component'
+import UserList from '../nav/user.component'
 import Post from '../post/post.component'
 import NewPost from '../post/new.component'
 
@@ -25,7 +25,7 @@ class Home extends React.Component {
 
   componentDidMount(){
     this.props.dispatch(
-      getCategories()
+      getHomeData()
     );
   }
 
@@ -69,6 +69,8 @@ class Home extends React.Component {
 }
 
 function mapStateToProps(state){
+  console.log('home state...');
+  console.log(state);
   return {
     user:state.users.list[state.users.current],
     posts:state.posts.list,

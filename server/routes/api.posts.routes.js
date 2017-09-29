@@ -4,7 +4,6 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const router = new express.Router()
 
-
 router.get(`${config.apiPrefix}/:category/posts`, (req, res) => {
     posts.getByCategory(req.token, req.params.category)
       .then(

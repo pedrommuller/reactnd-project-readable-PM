@@ -4,6 +4,7 @@ import TimeAgo from 'react-timeago'
 
 import IconArrowUp from './iconArrowUp'
 import IconArrowDown from './IconArrowDown'
+import Comments from './IconComment'
 
 
 export default class Post extends React.Component {
@@ -37,6 +38,9 @@ export default class Post extends React.Component {
             <span className="question-info">
               Posted by <a href="#">{post.author}</a>,<br />
               <TimeAgo date={post.timestamp} />
+            </span>
+            <span className="question-comments">
+              <Comments /> <span>Comments: {post.comments}</span>
             </span>
           </div>
       </div>

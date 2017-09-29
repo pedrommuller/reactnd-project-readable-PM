@@ -104,7 +104,21 @@ a:hover {
   border-radius:0.2em;
 }
 
+.question-comments{
+  float: left;
+  font-size: 0.8em;
+  height: 2em;
+  line-height: 2em;
+}
+
+.question-comments img{
+  vertical-align: middle;
+}
+
+
 .question-info{
+  float: left;
+  width: 100%;
   font-size: 0.8em;
 }
 

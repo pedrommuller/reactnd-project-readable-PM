@@ -27,10 +27,26 @@ app.use(cors())
 app.set('view engine','ejs')
 app.set('views', __dirname + '/server/views')
 
+app.use((req, res, next)=>{
+  if(req.originalUrl.includes(config.apiPrefix)){
+    const token = req.get('Authorization')
+    if (token) {
+      req.token = token
+      next()
+    } else {
+      res.status(403).send({
+        error: 'Please provide an Authorization header to identify yourself (can be whatever you want)'
+      })
+    }
+  }else{
+    next()
+  }
+})
+
 glob.sync('./server/routes/*.js').forEach(file=>{
   const route = require(path.resolve(file))
   app.use(route)
-});
+})
 
 app.listen(config.port, () => {
   console.log('Server listening on port %s, Ctrl+C to stop', config.port)

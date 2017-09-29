@@ -1,5 +1,5 @@
 const clone = require('clone')
-
+const comments = require('./comments.js')
 let db = {}
 
 const defaultData = {
@@ -11,7 +11,7 @@ const defaultData = {
     author: 'thingtwo',
     category: 'react',
     voteScore: 6,
-    deleted: false 
+    deleted: false
   },
   "6ni6ok3ym7mf1p33lnez": {
     id: '6ni6ok3ym7mf1p33lnez',
@@ -46,7 +46,7 @@ function get (token, id) {
   return new Promise((res) => {
     const posts = getData(token)
     res(
-      posts[id].deleted 
+      posts[id].deleted
         ? {}
         : posts[id]
     )
@@ -55,17 +55,26 @@ function get (token, id) {
 
 function getAll (token) {
   return new Promise((res) => {
-    const posts = getData(token)
-    let keys = Object.keys(posts)
-    let filtered_keys = keys.filter(key => !posts.deleted)
-    res(filtered_keys.map(key => posts[key]))
-  })
+    let posts = getData(token);
+    let keys = Object.keys(posts);
+    const promises = keys.filter(key => !posts.deleted).map((key) => {
+      return comments.getCountByParent(token,posts[key].id).then(count=>{
+          posts[key].comments=count
+          return posts[key]
+      })
+    });
+
+    Promise.all(promises).then(data=>{
+      res(data);
+    });
+
+  });
 }
 
 function add (token, post) {
   return new Promise((res) => {
     let posts = getData(token)
-    
+
     posts[post.id] = {
       id: post.id,
       timestamp: post.timestamp,
@@ -76,7 +85,7 @@ function add (token, post) {
       voteScore: 1,
       deleted: false
     }
-     
+
     res(posts[post.id])
   })
 }
