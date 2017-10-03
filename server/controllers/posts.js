@@ -9,7 +9,8 @@ const defaultData = {
     title: 'Udacity is the best place to learn React',
     body: 'Everyone says so after all.',
     author: 'thingtwo',
-    category: 'react',
+    category: 'React',
+    path: 'react',
     voteScore: 6,
     deleted: false
   },
@@ -19,7 +20,8 @@ const defaultData = {
     title: 'Learn Redux in 10 minutes!',
     body: 'Just kidding. It takes more than 10 minutes to learn technology.',
     author: 'thingone',
-    category: 'redux',
+    category: 'Redux',
+    path:'redux',
     voteScore: -5,
     deleted: false
   }
@@ -37,7 +39,7 @@ function getByCategory (token, category) {
   return new Promise((res) => {
     let posts = getData(token)
     let keys = Object.keys(posts)
-    let filtered_keys = keys.filter(key => posts[key].category === category && !posts[key].deleted)
+    let filtered_keys = keys.filter(key => posts[key].path === category && !posts[key].deleted)
     res(filtered_keys.map(key => posts[key]))
   })
 }
@@ -82,6 +84,7 @@ function add (token, post) {
       body: post.body,
       author: post.author,
       category: post.category,
+      path:post.path,
       voteScore: 1,
       deleted: false
     }

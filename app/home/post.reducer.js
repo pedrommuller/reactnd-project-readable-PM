@@ -1,5 +1,7 @@
 const initialState = {
-  list:{}
+  list:{},
+  detail:{},
+  comments:[]
 }
 
 export default function posts(state = initialState,action){
@@ -9,7 +11,23 @@ export default function posts(state = initialState,action){
         ...state,
         ['list']:action.posts
       }
-      break;
+    break;
+    case 'GET_POSTS_BY_CATEGORY':
+      return {
+        ...state,
+        ['list']:action.posts
+      }
+    case 'GET_POST':
+      return {
+        ...state,
+        ['detail']:action.detail
+      }
+    break;
+    case 'GET_COMMENTS':
+    return {
+      ...state,
+      ['comments']:action.comments
+    }
     default:
       return state;
   }

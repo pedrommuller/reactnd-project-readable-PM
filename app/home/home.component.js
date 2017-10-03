@@ -1,7 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {getHomeData} from './home.actions'
+import {Link} from 'react-router-dom'
 
+import {getHomeData, getPostsByCategory} from './home.actions'
 import Badge from '../shared/badge.component'
 import Categories from '../nav/category.component'
 import UserList from '../nav/user.component'
@@ -15,6 +16,15 @@ class Home extends React.Component {
       visible:false
     };
     this.toogleState = this.toogleState.bind(this);
+    this.getCategoryFronPath = this.getCategoryFromPath.bind(this);
+
+    this.props.history.listen((location, action)=>{
+      if(location.state && location.state.routeType){
+        this.props.dispatch(
+          getPostsByCategory(location.pathname.replace('/',''))
+        );
+      }
+    });
   }
 
   toogleState(){
@@ -29,8 +39,17 @@ class Home extends React.Component {
     );
   }
 
+  getCategoryFromPath(path) {
+    return this.props.categories.filter(x=>x.path===path).map(e=>e.name);
+  }
+
   render() {
     const {user,posts, users, categories, match} = this.props;
+    const postList = Object.values(posts).length>0?
+      Object.values(posts).map((post)=>
+       <Post key={post.id} post={post} />
+    ):<div>No posts found</div>
+
     return (
       <div className="content-wrapper">
         <div className="content">
@@ -49,13 +68,11 @@ class Home extends React.Component {
               </div>
               <NewPost close={this.toogleState} visible={this.state.visible} />
               <div>
-                {match.path!=='/' && match.params.category?`Home > ${match.params.category}`:'Home'}
+                {match.path!=='/' && match.params.category? `Home > ${this.getCategoryFromPath(match.params.category)}`:'Home'}
               </div>
               <h1>Posts:</h1>
               {
-                Object.values(posts).map((post)=>
-                   <Post key={post.id} post={post} />
-                )
+                postList
               }
             </div>
             <div className="l-box pure-u-1 pure-u-md-1-6 pure-u-lg-1-5">
@@ -68,9 +85,8 @@ class Home extends React.Component {
   }
 }
 
+
 function mapStateToProps(state){
-  console.log('home state...');
-  console.log(state);
   return {
     user:state.users.list[state.users.current],
     posts:state.posts.list,

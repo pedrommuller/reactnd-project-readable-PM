@@ -8,7 +8,7 @@ const defaultData = {
     parentId: "8xf0y6ziyjabvozdd253nd",
     timestamp: 1468166872634,
     body: 'Hi there! I am a COMMENT.',
-    author: 'thingtwo',
+    author: '1',
     voteScore: 6,
     deleted: false,
     parentDeleted: false
@@ -18,7 +18,7 @@ const defaultData = {
     parentId: "8xf0y6ziyjabvozdd253nd",
     timestamp: 1469479767190,
     body: 'Comments. Are. Cool.',
-    author: 'thingone',
+    author: '2',
     voteScore: -5,
     deleted: false,
     parentDeleted: false
@@ -34,12 +34,10 @@ function getData (token) {
 }
 
 function getCountByParent(token,parentId){
-  console.log('token ', token, ' parentId ', parentId );
   return new Promise((res) => {
     let comments = getData(token)
     let keys = Object.keys(comments)
     filtered_keys = keys.filter(key => comments[key].parentId === parentId && !comments[key].deleted)
-    console.log(filtered_keys.length);
     res(filtered_keys.length)
   })
 }

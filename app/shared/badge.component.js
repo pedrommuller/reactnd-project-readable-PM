@@ -8,10 +8,9 @@ export default class Badge extends React.Component {
   }
 
   render() {
-    let {color,initials, name} = this.props;
-
+    const {color,initials, name, className} = this.props;
     return (
-      <div>
+      <div className={className}>
         <div className="badge-wrapper">
           <div style={{'backgroundColor': color}} className="badge">
             {
@@ -22,8 +21,8 @@ export default class Badge extends React.Component {
         <a href="#">{name}</a>
       </div>
     );
-
   }
+
 }
 
 Badge.propTypes = {

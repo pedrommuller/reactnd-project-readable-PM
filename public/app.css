@@ -32,6 +32,10 @@ a {
   float: right;
 }
 
+.align-left{
+  float: left;
+}
+
 textarea{
   width: 100%;
   resize: none;
@@ -136,6 +140,25 @@ a:hover {
 .question-vote{
   text-align: center;
   float: left;
+}
+
+.comment-badge{
+  clear: both;
+  width:10em;
+  height:3em;
+  float:left;
+}
+
+.comment{
+  padding: 1.5em;
+}
+
+.comment-body{
+  font-size: .8em;
+}
+
+.comment-body img{
+  vertical-align: middle;
 }
 
 .home-logo{

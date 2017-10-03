@@ -28,7 +28,7 @@ app.set('view engine','ejs')
 app.set('views', __dirname + '/server/views')
 
 app.use((req, res, next)=>{
-  if(req.originalUrl.includes(config.apiPrefix)){
+  if(req.originalUrl!==config.apiPrefix+'/' && req.originalUrl.includes(config.apiPrefix)){
     const token = req.get('Authorization')
     if (token) {
       req.token = token

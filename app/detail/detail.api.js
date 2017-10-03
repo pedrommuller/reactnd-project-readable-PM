@@ -10,19 +10,18 @@ const headers = {
   'Authorization': token
 }
 
-export const getAllByCategory = (category) =>{
-  const url = category===''? `${api}/posts`:
-    `${api}/${category}/posts`
-    return fetch(url, {
+export const getComments = (id) =>{
+  return fetch(`${api}/posts/${id}/comments`, {
+    headers ,
+    method:'GET'
+  }).then(res => res.json())
+    .then(data =>data)
+}
+
+export const getPost = (id) =>{
+    return fetch(`${api}/posts/${id}`, {
       headers ,
       method:'GET'
     }).then(res => res.json())
       .then(data =>data)
 }
-
-export const getAll = () =>
-  fetch(`${api}/posts`, {
-    headers ,
-    method:'GET'
-  }).then(res => res.json())
-    .then(data =>data)
