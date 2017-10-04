@@ -11,23 +11,34 @@ export default function posts(state = initialState,action){
         ...state,
         ['list']:action.posts
       }
-    break;
+
     case 'GET_POSTS_BY_CATEGORY':
       return {
         ...state,
         ['list']:action.posts
       }
+
     case 'GET_POST':
       return {
         ...state,
         ['detail']:action.detail
       }
-    break;
+
     case 'GET_COMMENTS':
     return {
       ...state,
       ['comments']:action.comments
     }
+
+    case 'SAVE_COMMENT':
+    return {
+      ...state,
+      ['comments']:[
+        ...[action.comment],
+        ...state['comments']
+      ]
+    }
+
     default:
       return state;
   }

@@ -11,7 +11,8 @@ const defaultData = {
     author: '1',
     voteScore: 6,
     deleted: false,
-    parentDeleted: false
+    parentDeleted: false,
+    parentCommentId:null
   },
   "8tu4bsun805n8un48ve89": {
     id: '8tu4bsun805n8un48ve89',
@@ -21,7 +22,8 @@ const defaultData = {
     author: '2',
     voteScore: -5,
     deleted: false,
-    parentDeleted: false
+    parentDeleted: false,
+    parentCommentId:null
   }
 }
 
@@ -65,7 +67,6 @@ function get (token, id) {
 function add (token, comment) {
   return new Promise((res) => {
     let comments = getData(token)
-
     comments[comment.id] = {
       id: comment.id,
       timestamp: comment.timestamp,
@@ -74,9 +75,10 @@ function add (token, comment) {
       parentId: comment.parentId,
       voteScore: 1,
       deleted: false,
-      parentDeleted: false
+      parentDeleted: false,
+      parentCommentId:comment.parentCommentId
     }
-
+    
     res(comments[comment.id])
   })
 }

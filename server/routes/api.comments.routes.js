@@ -5,7 +5,6 @@ const bodyParser = require('body-parser')
 
 const router = new express.Router()
 
-
 router.get(`${config.apiPrefix}/posts/:id/comments`, (req, res) => {
     comments.getByParent(req.token, req.params.id)
       .then(
@@ -46,6 +45,8 @@ router.put(`${config.apiPrefix}/comments/:id`, bodyParser.json(), (req, res) => 
 })
 
 router.post(`${config.apiPrefix}/comments`, bodyParser.json(), (req, res) => {
+    console.log(req.token, req.body);
+
     comments.add(req.token, req.body)
       .then(
           (data) => res.send(data),

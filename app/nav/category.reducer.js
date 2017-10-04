@@ -9,7 +9,6 @@ export default function categories(state=initialState, action){
         ...state,
         list:action.categories
       }
-      break;
     default:
       return state;
   }

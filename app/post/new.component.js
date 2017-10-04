@@ -52,6 +52,5 @@ function mapStateToProps(state){
 export default connect(mapStateToProps)(New);
 
 New.PropTypes = {
-  visible:PropTypes.bool.isRequired,
   close: PropTypes.func.isRequired
 };

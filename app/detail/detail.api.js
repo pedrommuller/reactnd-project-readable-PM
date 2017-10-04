@@ -7,7 +7,17 @@ if (!token)
 
 const headers = {
   'Accept': 'application/json',
+  'Content-Type':'application/json',
   'Authorization': token
+}
+
+export const saveComment = (comment)=> {
+  return fetch(`${api}/comments`, {
+    headers,
+    method:'POST',
+    body:JSON.stringify(comment)
+  }).then(res => res.json())
+    .then(data =>data)
 }
 
 export const getComments = (id) =>{

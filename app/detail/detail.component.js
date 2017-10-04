@@ -8,11 +8,15 @@ import UserList from '../nav/user.component'
 import Post from '../post/post.component'
 import Badge from '../shared/badge.component'
 import Comment from './comment.component'
+import NewComment from './new.component'
 
 class Detail extends React.Component {
   constructor(props){
     super(props);
-    this.postComment = this.postComment.bind(this);
+    this.toogleModal = this.toogleModal.bind(this);
+    this.state = {
+      visible:false
+    };
   }
 
   componentDidMount(){
@@ -22,16 +26,30 @@ class Detail extends React.Component {
     );
   }
 
-  postComment(e){
-    alert(e);
+  toogleModal(commentId){
+    if(!this.state.visible){
+      const {match} = this.props;
+      this.setState({
+        visible:true,
+        parentId:match.params.post_id,
+        commentId:commentId
+      });
+    }else{
+      this.setState({
+        visible:false,
+        parentId:null,
+        commentId:null
+      });
+    }
   }
+
 
   render() {
     const {users, categories, post, comments} = this.props;
-
     const list = comments.length>0?
       comments.map((comment)=>
-       <Comment handler={this.postComment} key={comment.id} user={users[comment.author]} comment={comment} />
+       <Comment handler={this.toogleModal}
+         key={comment.id} user={users[comment.author]} comment={comment} />
     ):<div>No comments found</div>
 
     return (
@@ -43,7 +61,6 @@ class Detail extends React.Component {
             </div>
             <div className="l-box pure-u-1 pure-u-md-2-6 pure-u-lg-3-5">
               <Post key={post.id} post={post} />
-
               <div>
                 <h3>Comments:</h3>
                 {list}
@@ -55,15 +72,28 @@ class Detail extends React.Component {
             </div>
           </div>
         </div>
+        {
+          this.state.visible && (<NewComment parentId={this.state.parentId} commentId={this.state.commentId}
+            close={this.toogleModal} />)
+        }
       </div>
     );
   }
 }
 
+
 function mapStateToProps(state){
+  let result =[];
+  const rc = state.posts.comments
+  .filter(x=>x.parentCommentId===null)
+  .forEach(e=>{
+    result.push(e);
+    const children = state.posts.comments.filter(c=>c.parentCommentId===e.id);
+    result = [...result,...children];
+  });
   return {
     post:state.posts.detail,
-    comments:state.posts.comments,
+    comments: result,
     users:state.users.list,
     categories:state.categories.list
   }
