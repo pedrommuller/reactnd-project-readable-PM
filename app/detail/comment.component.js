@@ -5,7 +5,7 @@ import Badge from '../shared/badge.component'
 import ReplyIcon from './reply.icon'
 
 const Comment = (props) =>{
-  const className = props.comment.parentCommentId?"reply":"comment";
+  const className = props.comment.parentCommentId ==props.comment.id?"comment":"reply";
   return (<div className={className}>
     <Badge className="comment-badge"
           color={props.user.color}
@@ -17,8 +17,8 @@ const Comment = (props) =>{
     <br />
      <div className="comment-body">
        <TimeAgo date={props.comment.timestamp} />,
-       &nbsp; {props.comment.voteScore} votes, <ReplyIcon />
-       <a onClick={(e)=>props.handler(props.comment.id)}> Reply</a>
+       &nbsp; {props.comment.voteScore} votes &nbsp;&nbsp;
+       {className==='comment' && <a onClick={(e)=>props.handler(props.comment.id)}><ReplyIcon /> [Reply]</a>}
      </div>
   </div>)
 }

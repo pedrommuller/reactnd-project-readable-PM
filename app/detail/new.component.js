@@ -26,9 +26,9 @@ class NewComment extends React.Component {
     if(this.state.body===''){
       return false;
     }
-    const id = Guid.raw();
+
     const comment = {
-      id:id,
+      id:Guid.raw(),
       timestamp:+ new Date,
       author: this.props.currentUser,
       parentId:this.props.parentId,

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import {sortBy} from 'lodash/collection'
 
 import {getPostDetail} from './detail.actions'
 import Categories from '../nav/category.component'
@@ -62,7 +63,9 @@ class Detail extends React.Component {
             <div className="l-box pure-u-1 pure-u-md-2-6 pure-u-lg-3-5">
               <Post key={post.id} post={post} />
               <div>
-                <h3>Comments:</h3>
+                List of comments:
+                  <a className="pure-button pure-button-primary align-right"
+                    onClick={(e)=>this.toogleModal(null)}>Add comment</a>
                 {list}
               </div>
 
@@ -83,21 +86,27 @@ class Detail extends React.Component {
 
 
 function mapStateToProps(state){
-  let result =[];
-  const rc = state.posts.comments
-  .filter(x=>x.parentCommentId===null)
-  .forEach(e=>{
-    result.push(e);
-    const children = state.posts.comments.filter(c=>c.parentCommentId===e.id);
-    result = [...result,...children];
-  });
+
+  state.posts.comments.forEach(e=>{
+    if(e.parentCommentId===null){
+      e.parentCommentId = e.id;
+    }
+  })
+
+  const orderedComments =
+  sortBy(state.posts.comments,['parentCommentId','timestamp'],['asc','desc']);
+
+  const detail = {...state.posts.detail};
+  detail.comments = orderedComments.length;
+
   return {
-    post:state.posts.detail,
-    comments: result,
+    post:detail,
+    comments: orderedComments,
     users:state.users.list,
     categories:state.categories.list
   }
 }
+
 
 export default connect(mapStateToProps)(Detail);
 
