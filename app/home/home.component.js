@@ -13,10 +13,12 @@ class Home extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      visible:false
+      visible:false,
+      post:{}
     };
     this.toogleState = this.toogleState.bind(this);
     this.getCategoryFronPath = this.getCategoryFromPath.bind(this);
+    this.handleAction = this.handleAction.bind(this);
 
     this.props.history.listen((location, action)=>{
       if(location.state && location.state.routeType){
@@ -33,6 +35,22 @@ class Home extends React.Component {
     });
   }
 
+  handleAction(e, post, action){
+    debugger;
+    switch (action) {
+      case 'edit':
+        this.setState({
+          post:post
+        });
+        this.toogleState();
+        break;
+      case 'delete':
+        alert(action);
+        break;
+    }
+
+  }
+
   componentDidMount(){
     this.props.dispatch(
       getHomeData(location.pathname.replace('/',''))
@@ -47,7 +65,7 @@ class Home extends React.Component {
     const {user,posts, users, categories, match} = this.props;
     const postList = Object.values(posts).length>0?
       Object.values(posts).map((post)=>
-       <Post key={post.id} post={post} />
+       <Post handleAction={this.handleAction}  key={post.id} post={post} />
     ):<div>No posts found</div>
 
     return (
@@ -61,12 +79,14 @@ class Home extends React.Component {
               <div className="l-box box">
                 <Badge color={user.color} initials={user.initials} name={user.name} />
                 <h2>
-                  <a onClick={()=>this.toogleState()}>
+                  <a onClick={()=>{this.toogleState(); this.setState({post:{}});}}>
                     What do you have in mind?
                   </a>
                 </h2>
               </div>
-              <NewPost close={this.toogleState} visible={this.state.visible} />
+              {
+                this.state.visible && <NewPost post={this.state.post} close={this.toogleState}/>
+              }
               <div>
                 {match.path!=='/' && match.params.category? `Home > ${this.getCategoryFromPath(match.params.category)}`:'Home'}
               </div>

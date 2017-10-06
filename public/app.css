@@ -103,6 +103,10 @@ a:hover {
 }
 
 .question-category{
+    clear: both;
+    padding-top: 2em;
+}
+.question-category span{
   margin-left: 1.5em;
   font-size: 0.8em;
   clear: both;
@@ -111,6 +115,16 @@ a:hover {
   background-color:#6FBEF3;
   padding: 0.1em 0.4em 0.1em 0.4em;
   border-radius:0.2em;
+  display: block;
+}
+
+.question-actions{
+  float: right;
+  margin-right: 2.5em;
+  font-size: 0.8em;
+}
+.question-actions span{
+  padding: 0 0.5em 0 0.5em;
 }
 
 .question-comments{
@@ -161,6 +175,9 @@ a:hover {
   font-size: .8em;
 }
 
+.comment-body div{
+  display: inline;
+}
 .comment-body img{
   vertical-align: middle;
 }
@@ -260,10 +277,9 @@ a:hover {
     border-radius: 0.3em;
     background-color: #fefefe;
     margin: auto;
-    padding: 1.2em;
+    padding: 1.2em 1.2em 3em 1.2em;
     box-shadow: 0 1px 1px rgba(0,0,0,0.5);
     width: 50%;
-    min-height: 12em;
 }
 
 .modal-content .warning{

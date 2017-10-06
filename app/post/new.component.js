@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import Guid from 'guid'
-
+import {isEmpty} from 'lodash/lang'
 import {saveNewPost} from './post.actions'
 import Badge from '../shared/badge.component'
 
@@ -13,11 +13,24 @@ class New extends React.Component {
     this.postQuestion = this.postQuestion.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.validateForm = this.validateForm.bind(this);
-    this.state ={
-      category:'',
-      path:'',
-      body:'',
-      title:''
+    this.resetState = this.resetState.bind(this);
+    this.resetState();
+  }
+
+  resetState(){
+    debugger;
+    if(!isEmpty(this.props.post)){
+      this.state = {
+        ...this.props.post
+      }
+    }else{
+      this.state ={
+        category:'',
+        path:'',
+        body:'',
+        title:'',
+        id:Guid.raw()
+      }
     }
   }
 
@@ -31,18 +44,23 @@ class New extends React.Component {
   postQuestion(){
     if(this.validateForm()){
       const post = {
-        id:Guid.raw(),
         timestamp:+new Date(),
         author: this.props.currentUser,
         ...this.state
       }
-      this.props.dispatch(saveNewPost(post));
+      if(this.props.post){
+        alert('edit')
+      }else{
+        this.props.dispatch(saveNewPost(post));
+      }
+
       this.props.close();
       this.setState({
         category:'',
         path:'',
         body:'',
-        title:''
+        title:'',
+        id:''
       });
     }
   }
@@ -71,12 +89,9 @@ class New extends React.Component {
   }
 
   render() {
-    const {visible,user, categories} = this.props;
-    const style ={};
-    style.display = visible?'block':'none';
-
+    const {user, categories} = this.props;
     return (
-      <div id="myModal" style={style} className="modal">
+      <div id="myModal" className="modal">
         <div className="modal-content">
           <span onClick={this.props.close} className="close">&times;</span>
           <Badge color={user.color} initials={user.initials} name={user.name} />

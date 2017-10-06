@@ -18,7 +18,7 @@ const Comment = (props) =>{
      <div className="comment-body">
        <TimeAgo date={props.comment.timestamp} />,
        &nbsp; {props.comment.voteScore} votes &nbsp;&nbsp;
-       {className==='comment' && <a onClick={(e)=>props.handler(props.comment.id)}><ReplyIcon /> [Reply]</a>}
+       {className==='comment' && <div><ReplyIcon /> <a onClick={(e)=>props.handler(props.comment.id)}>[Reply]</a> </div>}
      </div>
   </div>)
 }

@@ -27,7 +27,7 @@ class NewComment extends React.Component {
   }
 
   saveHandler(e){
-    if(validateForm()){
+    if(this.validateForm()){
       const comment = {
         id:Guid.raw(),
         timestamp:+ new Date,
@@ -53,10 +53,13 @@ class NewComment extends React.Component {
             <textarea value={this.state.body} required onChange={(e)=>this.handleChange(e, 'body')}>
             </textarea>
             {this.state.body==='' && <span className="warning">*Comment required</span>}
-            <a onClick={(e)=>this.saveHandler(e)}
-              className="pure-button pure-button-primary align-right">
-              Post Comment
-            </a>
+
+              <a onClick={(e)=>this.saveHandler(e)}
+                className="pure-button pure-button-primary align-right">
+                Post Comment
+              </a>
+
+            <br />
           </p>
         </div>
       </div>
