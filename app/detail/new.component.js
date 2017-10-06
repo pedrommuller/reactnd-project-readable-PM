@@ -22,22 +22,24 @@ class NewComment extends React.Component {
       })
   }
 
+  validateForm(){
+    return !(this.state.body==='')
+  }
+
   saveHandler(e){
-    if(this.state.body===''){
-      return false;
-    }
+    if(validateForm()){
+      const comment = {
+        id:Guid.raw(),
+        timestamp:+ new Date,
+        author: this.props.currentUser,
+        parentId:this.props.parentId,
+        parentCommentId:this.props.commentId,
+        ...this.state
+      }
 
-    const comment = {
-      id:Guid.raw(),
-      timestamp:+ new Date,
-      author: this.props.currentUser,
-      parentId:this.props.parentId,
-      parentCommentId:this.props.commentId,
-      ...this.state
+      this.props.dispatch(saveNewComment(comment));
+      this.props.close();
     }
-
-    this.props.dispatch(saveNewComment(comment));
-    this.props.close();
   }
 
   render() {
@@ -48,7 +50,7 @@ class NewComment extends React.Component {
           <span onClick={close} className="close">&times;</span>
           <Badge color={user.color} initials={user.initials} name={user.name} />
           <p>
-            <textarea required onChange={(e)=>this.handleChange(e, 'body')}>
+            <textarea value={this.state.body} required onChange={(e)=>this.handleChange(e, 'body')}>
             </textarea>
             {this.state.body==='' && <span className="warning">*Comment required</span>}
             <a onClick={(e)=>this.saveHandler(e)}

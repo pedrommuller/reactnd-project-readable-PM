@@ -35,7 +35,7 @@ class Home extends React.Component {
 
   componentDidMount(){
     this.props.dispatch(
-      getHomeData()
+      getHomeData(location.pathname.replace('/',''))
     );
   }
 

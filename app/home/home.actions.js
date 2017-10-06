@@ -23,11 +23,12 @@ export function getPostsByCategory(category){
   }
 }
 
-export function getHomeData(){
+export function getHomeData(category){
     return function(dispatch){
       dispatch(getCategories());
-      getAll().then(posts=>
-        dispatch(postAction(posts))
-      )
+      dispatch(getPostsByCategory(category));
+      // getAll().then(posts=>
+      //   dispatch(postAction(posts))
+      // )
     }
 }

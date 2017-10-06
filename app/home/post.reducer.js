@@ -12,7 +12,6 @@ export default function posts(state = initialState,action){
         ['list']:action.posts
       }
     case 'SAVE_POST':
-        debugger;
         return {
           ...state,
           ['list']:

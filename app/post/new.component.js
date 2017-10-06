@@ -82,13 +82,13 @@ class New extends React.Component {
           <Badge color={user.color} initials={user.initials} name={user.name} />
           <p>
             {this.state.title ==='' && <span className="warning">*Title required</span>}
-            <input type="text" placeholder="What do you have in mind?"
+            <input type="text" value={this.state.title} placeholder="What do you have in mind?"
               onChange={(e)=>this.handleChange(e,'title')} />
             {this.state.body==='' && <span className="warning">*Description required</span>}
-            <textarea onChange={(e)=>this.handleChange(e,'body')}>
+            <textarea value={this.state.body} onChange={(e)=>this.handleChange(e,'body')}>
             </textarea>
             {this.state.category==='' && <span className="warning">*Category required</span>}
-            <select onChange={(e)=>this.handleChange(e,'category')}>
+            <select value={this.state.path} onChange={(e)=>this.handleChange(e,'category')}>
               <option value="" key="1"> - Select -</option>
               {categories.map((e)=><option key={e.path} value={e.path}>{e.name}</option>)}
             </select>
