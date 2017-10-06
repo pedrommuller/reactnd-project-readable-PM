@@ -33,7 +33,7 @@ const Post = (props)=>(
       </div>
       <div className="pure-u-1-5">
         <span className="question-info">
-          Posted by <a href="#">{props.post.author}</a>,<br />
+          Posted by <b>{props.post.initials}</b>,<br />
           <TimeAgo date={props.post.timestamp} />
         </span>
         <span className="question-comments">
@@ -46,5 +46,5 @@ const Post = (props)=>(
 export default Post;
 
 Post.propTypes = {
-  post:PropTypes.object.isRequired
+  post:PropTypes.object.isRequired,
 };

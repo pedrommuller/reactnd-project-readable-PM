@@ -27,8 +27,5 @@ export function getHomeData(category){
     return function(dispatch){
       dispatch(getCategories());
       dispatch(getPostsByCategory(category));
-      // getAll().then(posts=>
-      //   dispatch(postAction(posts))
-      // )
     }
 }

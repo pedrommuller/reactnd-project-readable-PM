@@ -87,9 +87,17 @@ class Home extends React.Component {
 
 
 function mapStateToProps(state){
+  const posts = Object.values(state.posts.list).map(
+    e=> {
+      return {
+        ...e,
+        ['initials']: state.users.list[e.author].initials
+      }
+    }
+  );
   return {
     user:state.users.list[state.users.current],
-    posts:state.posts.list,
+    posts:posts,
     users:state.users.list,
     categories:state.categories.list
   }
