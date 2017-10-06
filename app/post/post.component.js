@@ -3,17 +3,17 @@ import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import TimeAgo from 'react-timeago'
 
-import IconArrowUp from './iconArrowUp'
-import IconArrowDown from './IconArrowDown'
-import Comments from './IconComment'
+import ArrowUpIcon from './ArrowUp.icon'
+import ArrowDownIcon from './ArrowDown.icon'
+import CommentIcon from './Comment.icon'
 
 const Post = (props)=>(
   <div className="l-box box">
       <div className="pure-u-1-5 ">
         <div className="question-arrows">
-          <IconArrowUp />
+          <ArrowUpIcon />
           <br/>
-          <IconArrowDown />
+          <ArrowDownIcon />
         </div>
         <div className="question-vote">
           {props.post.voteScore} <br />
@@ -37,7 +37,7 @@ const Post = (props)=>(
           <TimeAgo date={props.post.timestamp} />
         </span>
         <span className="question-comments">
-          <Comments /> <span>Comments: {props.post.comments}</span>
+          <CommentIcon /> <span>Comments: {props.post.comments}</span>
         </span>
       </div>
   </div>

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import Guid from 'guid'
 
+import {saveNewPost} from './post.actions'
 import Badge from '../shared/badge.component'
 
 class New extends React.Component {
@@ -35,7 +36,14 @@ class New extends React.Component {
         author: this.props.currentUser,
         ...this.state
       }
-      console.log(post);
+      this.props.dispatch(saveNewPost(post));
+      this.props.close();
+      this.setState({
+        category:'',
+        path:'',
+        body:'',
+        title:''
+      });
     }
   }
 

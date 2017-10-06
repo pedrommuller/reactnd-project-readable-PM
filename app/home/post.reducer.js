@@ -11,6 +11,13 @@ export default function posts(state = initialState,action){
         ...state,
         ['list']:action.posts
       }
+    case 'SAVE_POST':
+        debugger;
+        return {
+          ...state,
+          ['list']:
+            [...[action.post],...state.list]
+        }
 
     case 'GET_POSTS_BY_CATEGORY':
       return {
