@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 
-import {getHomeData, getPostsByCategory} from './home.actions'
+import {getHomeData, getPostsByCategory, deleteCurrentPost} from './home.actions'
 import Badge from '../shared/badge.component'
 import Categories from '../nav/category.component'
 import UserList from '../nav/user.component'
@@ -44,7 +44,10 @@ class Home extends React.Component {
         this.toogleState();
         break;
       case 'delete':
-        alert(action);
+        if(confirm('Do you want to delete this post?')){
+          console.log(post.id);
+          this.props.dispatch(deleteCurrentPost(post.id))
+        }
         break;
     }
   }

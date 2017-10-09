@@ -78,7 +78,7 @@ function add (token, comment) {
       parentDeleted: false,
       parentCommentId:comment.parentCommentId
     }
-    
+
     res(comments[comment.id])
   })
 }

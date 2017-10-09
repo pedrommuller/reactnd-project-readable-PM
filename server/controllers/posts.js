@@ -59,7 +59,7 @@ function getAll (token) {
   return new Promise((res) => {
     let posts = getData(token);
     let keys = Object.keys(posts);
-    const promises = keys.filter(key => !posts.deleted).map((key) => {
+    const promises = keys.filter(key => !posts[key].deleted).map((key) => {
       return comments.getCountByParent(token,posts[key].id).then(count=>{
           posts[key].comments=count
           return posts[key]

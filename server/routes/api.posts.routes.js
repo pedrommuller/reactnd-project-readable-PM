@@ -1,4 +1,5 @@
 const posts = require('../controllers/posts')
+const comments = require('../controllers/comments')
 const config = require('../config')
 const express = require('express')
 const bodyParser = require('body-parser')

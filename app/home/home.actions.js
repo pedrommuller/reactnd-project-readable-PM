@@ -25,7 +25,7 @@ function deletePostAction(id){
 export function deleteCurrentPost(id){
   return function(dispatch){
     deletePost(id).then(response=>dispatch(
-
+      deletePostAction(id)
     ))
   }
 }

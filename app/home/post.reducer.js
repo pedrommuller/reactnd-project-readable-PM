@@ -30,9 +30,10 @@ export default function posts(state = initialState,action){
               }:e)
       }
     case 'DELETE_POST':
+      console.log(action);
       return {
         ...state,
-        ['list']:state.list.filter(e=>e.id===action.id)
+        ['list']:state.list.filter(e=>e.id!==action.id)
       }
     case 'GET_POSTS_BY_CATEGORY':
       return {
