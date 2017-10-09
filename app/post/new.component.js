@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import Guid from 'guid'
 import {isEmpty} from 'lodash/lang'
-import {saveNewPost} from './post.actions'
+import {saveNewPost, editCurrentPost} from './post.actions'
 import Badge from '../shared/badge.component'
 
 class New extends React.Component {
@@ -18,7 +18,6 @@ class New extends React.Component {
   }
 
   resetState(){
-    debugger;
     if(!isEmpty(this.props.post)){
       this.state = {
         ...this.props.post
@@ -43,25 +42,24 @@ class New extends React.Component {
 
   postQuestion(){
     if(this.validateForm()){
-      const post = {
+      let post = {
         timestamp:+new Date(),
         author: this.props.currentUser,
         ...this.state
       }
       if(this.props.post){
-        alert('edit')
+        post = {
+          id:this.props.post.id,
+          timestamp:this.props.post.timestamp,
+          ...this.state
+        }
+        this.props.dispatch(editCurrentPost(post));
       }else{
         this.props.dispatch(saveNewPost(post));
       }
 
       this.props.close();
-      this.setState({
-        category:'',
-        path:'',
-        body:'',
-        title:'',
-        id:''
-      });
+      this.resetState();
     }
   }
 

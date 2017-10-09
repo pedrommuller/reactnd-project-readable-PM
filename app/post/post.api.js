@@ -11,6 +11,16 @@ const headers = {
   'Authorization': token
 }
 
+export const editPost = (post)=> {
+  return fetch(`${api}/posts/${post.id}`, {
+    headers,
+    method:'PUT',
+    body:JSON.stringify(post)
+  }).then(res => res.json())
+    .then(data =>data)
+}
+
+
 export const savePost = (post)=> {
   return fetch(`${api}/posts`, {
     headers,

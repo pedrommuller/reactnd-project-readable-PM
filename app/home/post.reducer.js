@@ -17,7 +17,23 @@ export default function posts(state = initialState,action){
           ['list']:
             [...[action.post],...state.list]
         }
-
+    case 'EDIT_POST':
+      return {
+          ...state,
+          ['list']:state.list.map((e,i)=>
+              e.id===action.post.id?
+              {
+                ...state.list[i],
+                body:action.post.body,
+                title:action.post.title,
+                category:action.post.category
+              }:e)
+      }
+    case 'DELETE_POST':
+      return {
+        ...state,
+        ['list']:state.list.filter(e=>e.id===action.id)
+      }
     case 'GET_POSTS_BY_CATEGORY':
       return {
         ...state,

@@ -36,7 +36,6 @@ class Home extends React.Component {
   }
 
   handleAction(e, post, action){
-    debugger;
     switch (action) {
       case 'edit':
         this.setState({
@@ -48,7 +47,6 @@ class Home extends React.Component {
         alert(action);
         break;
     }
-
   }
 
   componentDidMount(){

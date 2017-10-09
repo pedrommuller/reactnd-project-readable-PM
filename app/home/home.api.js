@@ -10,6 +10,14 @@ const headers = {
   'Authorization': token
 }
 
+export const deletePost = (id)=>{
+  fetch(`${api}/posts/${id}`, {
+    headers ,
+    method:'DELETE'
+  }).then(res => res.json())
+    .then(data =>data)
+}
+
 export const getAllByCategory = (category) =>{
   const url = category===''? `${api}/posts`:
     `${api}/${category}/posts`

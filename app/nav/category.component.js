@@ -7,7 +7,8 @@ const Categories = (props)=>{
   return <div>
     Categories  {
       props.router.location &&
-      props.router.location.pathname!=='/' && <Link to="/">[Clear]</Link>
+      props.router.location.pathname!=='/' &&
+      <Link to={{pathname:'/', state:{routeType:'category'}}}>[Clear]</Link>
     }
     <hr />
     <ul>
@@ -15,7 +16,8 @@ const Categories = (props)=>{
           props.list.map((e)=>
           <li key={e.path}>
             <NavLink activeStyle={{fontWeight: 'bold',fontSize:'1.1em'}}
-            to={{pathname:`/${e.path}`,state:{routeType:'category'}}}>{e.name}</NavLink>
+              to={{pathname:`/${e.path}`,state:{routeType:'category'}}}>{e.name}
+            </NavLink>
           </li>
         )
       }
