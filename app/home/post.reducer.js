@@ -36,7 +36,8 @@ export default function posts(state = initialState,action){
           e.id === action.comment.id?
           {
             ...state.comments[i],
-            body:action.comment.body
+            body:action.comment.body,
+            timestamp:action.comment.timestamp
           }:e
         )
       }

@@ -45,10 +45,18 @@ class Detail extends React.Component {
           });
           break;
         case 'edit':
-        this.setState({
-          visible:true,
-          comment:comment
-        });
+          this.setState({
+            visible:true,
+            comment:comment
+          });
+          break;
+        case 'new':
+          this.setState({
+            parentId:match.params.post_id,
+            commentId:null,
+            visible:true,
+            comment:{}
+          })
       }
     }else{
       this.setState({
@@ -80,7 +88,7 @@ class Detail extends React.Component {
               <div>
                 List of comments:
                   <a className="pure-button pure-button-primary align-right"
-                    onClick={(e)=>this.toogleModal(null)}>Add comment</a>
+                    onClick={(e)=>this.toogleModal(null,'new')}>Add comment</a>
                 {list}
               </div>
 
