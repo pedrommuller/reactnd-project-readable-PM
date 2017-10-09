@@ -2,23 +2,34 @@ import React from 'react';
 import {PropTypes} from 'prop-types'
 import {connect} from 'react-redux'
 import Guid from 'guid'
+import {isEmpty} from 'lodash/lang'
 
-import {saveNewComment} from './detail.actions'
+import {saveNewComment,editCurrentComment} from './detail.actions'
 import Badge from '../shared/badge.component'
 
 class NewComment extends React.Component {
   constructor(props){
       super(props);
-      this.state={
-        body:''
-      };
       this.handleChange = this.handleChange.bind(this);
       this.saveHandler = this.saveHandler.bind(this);
+      if(!isEmpty(this.props.comment)){
+        this.state = {
+          comment:this.props.comment
+        }
+      }else{
+        this.state ={
+          comment:{
+            body:''
+          }
+        }
+      }
   }
 
   handleChange(e,control){
       this.setState({
-        [control]:e.target.value
+        comment:{
+          [control]:e.target.value
+        }
       })
   }
 
@@ -28,16 +39,26 @@ class NewComment extends React.Component {
 
   saveHandler(e){
     if(this.validateForm()){
-      const comment = {
-        id:Guid.raw(),
-        timestamp:+ new Date,
-        author: this.props.currentUser,
-        parentId:this.props.parentId,
-        parentCommentId:this.props.commentId,
-        ...this.state
+      let comment ={};
+      if(isEmpty(this.props.comment)){
+        comment = {
+          id:Guid.raw(),
+          timestamp:+ new Date,
+          author: this.props.currentUser,
+          parentId:this.props.parentId,
+          parentCommentId:this.props.commentId,
+          body:this.state.comment.body
+        }
+        this.props.dispatch(saveNewComment(comment));
+      }else{
+        console.log(this.props);
+        comment = {
+          id:this.props.comment.id,
+          body:this.state.comment.body,
+          timestamp:+ new Date
+        }
+        this.props.dispatch(editCurrentComment(comment));
       }
-
-      this.props.dispatch(saveNewComment(comment));
       this.props.close();
     }
   }
@@ -50,9 +71,10 @@ class NewComment extends React.Component {
           <span onClick={close} className="close">&times;</span>
           <Badge color={user.color} initials={user.initials} name={user.name} />
           <p>
-            <textarea value={this.state.body} required onChange={(e)=>this.handleChange(e, 'body')}>
+            <textarea value={this.state.comment.body} required
+              onChange={(e)=>this.handleChange(e, 'body')}>
             </textarea>
-            {this.state.body==='' && <span className="warning">*Comment required</span>}
+            {this.state.comment.body==='' && <span className="warning">*Comment required</span>}
 
               <a onClick={(e)=>this.saveHandler(e)}
                 className="pure-button pure-button-primary align-right">

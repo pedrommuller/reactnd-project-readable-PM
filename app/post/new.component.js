@@ -13,11 +13,6 @@ class New extends React.Component {
     this.postQuestion = this.postQuestion.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.validateForm = this.validateForm.bind(this);
-    this.resetState = this.resetState.bind(this);
-    this.resetState();
-  }
-
-  resetState(){
     if(!isEmpty(this.props.post)){
       this.state = {
         ...this.props.post
@@ -59,7 +54,6 @@ class New extends React.Component {
       }
 
       this.props.close();
-      this.resetState();
     }
   }
 

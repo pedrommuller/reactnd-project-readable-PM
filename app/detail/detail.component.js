@@ -1,8 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {sortBy} from 'lodash/collection'
+import {isEmpty} from 'lodash/lang'
 
+import {getCategories} from '../nav/category.actions.js'
 import {getPostDetail} from './detail.actions'
 import Categories from '../nav/category.component'
 import UserList from '../nav/user.component'
@@ -21,20 +22,34 @@ class Detail extends React.Component {
   }
 
   componentDidMount(){
+    if(isEmpty(this.props.categories)){
+      this.props.dispatch(getCategories());
+    }
+
     const {match} = this.props;
     this.props.dispatch(
       getPostDetail(match.params.post_id)
     );
   }
 
-  toogleModal(commentId){
+  toogleModal(comment, action){
     if(!this.state.visible){
       const {match} = this.props;
-      this.setState({
-        visible:true,
-        parentId:match.params.post_id,
-        commentId:commentId
-      });
+      switch (action) {
+        case 'reply':
+          this.setState({
+            visible:true,
+            parentId:match.params.post_id,
+            commentId:comment.id,
+            comment:{}
+          });
+          break;
+        case 'edit':
+        this.setState({
+          visible:true,
+          comment:comment
+        });
+      }
     }else{
       this.setState({
         visible:false,
@@ -61,7 +76,7 @@ class Detail extends React.Component {
               <Categories list={categories} />
             </div>
             <div className="l-box pure-u-1 pure-u-md-2-6 pure-u-lg-3-5">
-              <Post key={post.id} post={post} />
+              <Post handleAction={this.handleAction}  key={post.id} post={post} />
               <div>
                 List of comments:
                   <a className="pure-button pure-button-primary align-right"
@@ -76,17 +91,16 @@ class Detail extends React.Component {
           </div>
         </div>
         {
-          this.state.visible && (<NewComment parentId={this.state.parentId} commentId={this.state.commentId}
-            close={this.toogleModal} />)
+          this.state.visible && (
+            <NewComment comment={this.state.comment} parentId={this.state.parentId}
+              commentId={this.state.commentId} close={this.toogleModal} />)
         }
       </div>
     );
   }
 }
 
-
 function mapStateToProps(state){
-
   state.posts.comments.forEach(e=>{
     if(e.parentCommentId===null){
       e.parentCommentId = e.id;
@@ -95,8 +109,12 @@ function mapStateToProps(state){
 
   const orderedComments =
   sortBy(state.posts.comments,['parentCommentId','timestamp'],['asc','desc']);
+  const detail = !isEmpty(state.posts.detail)? {
+    ...state.posts.detail,
+    ['initials']: state.users.list[state.posts.detail.author].initials,
+    ['canEdit']: false
+  }:{};
 
-  const detail = {...state.posts.detail};
   detail.comments = orderedComments.length;
 
   return {
@@ -107,9 +125,4 @@ function mapStateToProps(state){
   }
 }
 
-
 export default connect(mapStateToProps)(Detail);
-
-
-Detail.propTypes = {
-};

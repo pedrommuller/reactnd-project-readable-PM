@@ -11,6 +11,18 @@ const headers = {
   'Authorization': token
 }
 
+export const editComment = (comment)=> {
+  return fetch(`${api}/comments/${comment.id}`, {
+    headers,
+    method:'PUT',
+    body:JSON.stringify(comment)
+  }).then(res => {
+    debugger;
+    return res.json()
+  })
+    .then(data =>data)
+}
+
 export const saveComment = (comment)=> {
   return fetch(`${api}/comments`, {
     headers,

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import TimeAgo from 'react-timeago'
 import Badge from '../shared/badge.component'
 import ReplyIcon from './reply.icon'
+import EditIcon from './edit.icon'
+
 
 const Comment = (props) =>{
   const className = props.comment.parentCommentId ==props.comment.id?"comment":"reply";
@@ -18,7 +20,16 @@ const Comment = (props) =>{
      <div className="comment-body">
        <TimeAgo date={props.comment.timestamp} />,
        &nbsp; {props.comment.voteScore} votes &nbsp;&nbsp;
-       {className==='comment' && <div><ReplyIcon /> <a onClick={(e)=>props.handler(props.comment.id)}>[Reply]</a> </div>}
+       {
+         className==='comment' &&
+        <div>
+          <ReplyIcon />
+          <a onClick={(e)=>props.handler(props.comment,'reply')}>[Reply]</a>
+          &nbsp;
+          <EditIcon />
+          <a onClick={(e)=>props.handler(props.comment,'edit')}>[Edit]</a>
+        </div>
+       }
      </div>
   </div>)
 }

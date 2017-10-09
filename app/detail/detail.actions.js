@@ -1,4 +1,4 @@
-import {getPost,getComments,saveComment} from './detail.api.js'
+import {getPost,getComments,saveComment, editComment} from './detail.api.js'
 
 function getPostAction(post){
   return {
@@ -15,10 +15,26 @@ function saveCommentAction(comment){
 }
 
 function getCommentsAction(comments){
-    return{
+    return {
       type:'GET_COMMENTS',
       comments:comments
     }
+}
+
+function editCommentAction(comment){
+  return {
+    type:'EDIT_COMMENT',
+    comment:comment
+  }
+}
+
+export function editCurrentComment(comment){
+  debugger;
+  return function(dispatch){
+    editComment(comment).then(
+      response=>dispatch(editCommentAction(response))
+    );
+  }
 }
 
 export function saveNewComment(comment){

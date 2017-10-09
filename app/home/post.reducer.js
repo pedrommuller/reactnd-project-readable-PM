@@ -29,6 +29,17 @@ export default function posts(state = initialState,action){
                 category:action.post.category
               }:e)
       }
+    case 'EDIT_COMMENT':
+      return {
+        ...state,
+        ['comments']:state.comments.map((e,i)=>
+          e.id === action.comment.id?
+          {
+            ...state.comments[i],
+            body:action.comment.body
+          }:e
+        )
+      }
     case 'DELETE_POST':
       console.log(action);
       return {

@@ -65,6 +65,5 @@ const Post = (props)=>(
 export default Post;
 
 Post.propTypes = {
-  post:PropTypes.object.isRequired,
-  handleAction:PropTypes.func.isRequired
+  post:PropTypes.object.isRequired
 };
