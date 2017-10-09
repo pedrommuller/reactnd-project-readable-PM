@@ -27,8 +27,7 @@ class New extends React.Component {
         category:'',
         path:'',
         body:'',
-        title:'',
-        id:Guid.raw()
+        title:''
       }
     }
   }
@@ -43,11 +42,12 @@ class New extends React.Component {
   postQuestion(){
     if(this.validateForm()){
       let post = {
+        id:Guid.raw(),
         timestamp:+new Date(),
         author: this.props.currentUser,
         ...this.state
       }
-      if(this.props.post){
+      if(!isEmpty(this.props.post)){
         post = {
           id:this.props.post.id,
           timestamp:this.props.post.timestamp,

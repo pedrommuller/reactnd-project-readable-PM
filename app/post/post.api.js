@@ -20,7 +20,6 @@ export const editPost = (post)=> {
     .then(data =>data)
 }
 
-
 export const savePost = (post)=> {
   return fetch(`${api}/posts`, {
     headers,

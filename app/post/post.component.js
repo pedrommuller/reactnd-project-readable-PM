@@ -34,14 +34,20 @@ const Post = (props)=>(
             {props.post.category}
           </span>
         </div>
-        <div className="question-actions">
-          <span>
-           <EditIcon />&nbsp;<a onClick={(e)=>props.handleAction(e,props.post,'edit')}>Edit</a>
-          </span>
-          <span>
-            <BinIcon />&nbsp;<a onClick={(e)=>props.handleAction(e,props.post,'delete')}>Delete</a>
-          </span>
-        </div>
+        {
+            props.post.canEdit &&
+            (
+              <div className="question-actions">
+               <span>
+                <EditIcon />&nbsp;<a onClick={(e)=>props.handleAction(e,props.post,'edit')}>Edit</a>
+               </span>
+               <span>
+                 <BinIcon />&nbsp;<a onClick={(e)=>props.handleAction(e,props.post,'delete')}>Delete</a>
+               </span>
+              </div>
+            )
+        }
+
 
       </div>
       <div className="pure-u-1-5">

@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import {isEmpty} from 'lodash/lang'
 
 import {getHomeData, getPostsByCategory, deleteCurrentPost} from './home.actions'
 import Badge from '../shared/badge.component'
@@ -108,14 +109,22 @@ class Home extends React.Component {
 
 
 function mapStateToProps(state){
-  const posts = Object.values(state.posts.list).map(
+  let posts = Object.values(state.posts.list).map(
     e=> {
+
       return {
         ...e,
-        ['initials']: state.users.list[e.author].initials
+        ['initials']: state.users.list[e.author].initials,
+        ['canEdit']: e.author === state.users.current
       }
     }
   );
+
+  const path = location.pathname.replace('/','');
+  if(!isEmpty(path)){
+    posts = posts.filter(f=>f.path===path);
+  }
+
   return {
     user:state.users.list[state.users.current],
     posts:posts,
