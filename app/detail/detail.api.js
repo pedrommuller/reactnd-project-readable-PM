@@ -11,39 +11,36 @@ const headers = {
   'Authorization': token
 }
 
-export const editComment = (comment)=> {
-  return fetch(`${api}/comments/${comment.id}`, {
+export const editComment = (comment)=>
+  fetch(`${api}/comments/${comment.id}`, {
     headers,
     method:'PUT',
     body:JSON.stringify(comment)
   }).then(res => {
-    debugger;
     return res.json()
-  })
-    .then(data =>data)
-}
+  }).then(data =>data)
 
-export const saveComment = (comment)=> {
-  return fetch(`${api}/comments`, {
+
+export const saveComment = (comment)=>
+    fetch(`${api}/comments`, {
     headers,
     method:'POST',
     body:JSON.stringify(comment)
   }).then(res => res.json())
     .then(data =>data)
-}
 
-export const getComments = (id) =>{
-  return fetch(`${api}/posts/${id}/comments`, {
+
+export const getComments = (id) =>
+  fetch(`${api}/posts/${id}/comments`, {
     headers ,
     method:'GET'
   }).then(res => res.json())
     .then(data =>data)
-}
 
-export const getPost = (id) =>{
-    return fetch(`${api}/posts/${id}`, {
+
+export const getPost = (id) =>
+    fetch(`${api}/posts/${id}`, {
       headers ,
       method:'GET'
     }).then(res => res.json())
       .then(data =>data)
-}

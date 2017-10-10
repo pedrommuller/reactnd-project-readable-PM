@@ -42,7 +42,6 @@ export default function posts(state = initialState,action){
         )
       }
     case 'DELETE_POST':
-      console.log(action);
       return {
         ...state,
         ['list']:state.list.filter(e=>e.id!==action.id)
@@ -69,8 +68,8 @@ export default function posts(state = initialState,action){
     return {
       ...state,
       ['comments']:[
-        ...[action.comment],
-        ...state['comments']
+        ...state['comments'],
+        ...[action.comment]
       ]
     }
 

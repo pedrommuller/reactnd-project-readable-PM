@@ -55,7 +55,10 @@ class NewComment extends React.Component {
         comment = {
           id:this.props.comment.id,
           body:this.state.comment.body,
-          timestamp:+ new Date
+          timestamp:+ new Date,
+          author: this.props.currentUser,
+          parentId:this.props.parentId,
+          parentCommentId:this.props.commentId
         }
         this.props.dispatch(editCurrentComment(comment));
       }

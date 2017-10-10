@@ -46,6 +46,8 @@ class Detail extends React.Component {
           break;
         case 'edit':
           this.setState({
+            parentId:match.params.post_id,
+            comment:comment.commentId,
             visible:true,
             comment:comment
           });
@@ -109,20 +111,19 @@ class Detail extends React.Component {
 }
 
 function mapStateToProps(state){
+
   state.posts.comments.forEach(e=>{
     if(e.parentCommentId===null){
       e.parentCommentId = e.id;
     }
   })
 
-  const orderedComments =
-  sortBy(state.posts.comments,['parentCommentId','timestamp'],['asc','desc']);
   const detail = !isEmpty(state.posts.detail)? {
     ...state.posts.detail,
     ['initials']: state.users.list[state.posts.detail.author].initials,
     ['canEdit']: false
   }:{};
-
+  const orderedComments = sortBy(state.posts.comments,(e)=>e.parentCommentId);
   detail.comments = orderedComments.length;
 
   return {
