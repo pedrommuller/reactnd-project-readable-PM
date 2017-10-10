@@ -22,14 +22,19 @@ const Comment = (props) =>{
        &nbsp; {props.comment.voteScore} votes &nbsp;&nbsp;
        {
          className==='comment' &&
-        <div>
-          <ReplyIcon />
-          <a onClick={(e)=>props.handler(props.comment,'reply')}>[Reply]</a>
-          &nbsp;
-          <EditIcon />
-          <a onClick={(e)=>props.handler(props.comment,'edit')}>[Edit]</a>
-        </div>
+         <div>
+           <ReplyIcon />
+           <a onClick={(e)=>props.handler(props.comment,'reply')}>[Reply]</a>
+         </div>
        }
+       {
+         props.canEdit && <div>
+           &nbsp;
+           <EditIcon />
+           <a onClick={(e)=>props.handler(props.comment,'edit')}>[Edit]</a>
+         </div>
+       }
+
      </div>
   </div>)
 }
@@ -38,6 +43,7 @@ const Comment = (props) =>{
 export default Comment;
 
 Comment.propTypes = {
+  canEdit: PropTypes.bool.isRequired,
   comment: PropTypes.object.isRequired,
   user:PropTypes.object.isRequired,
   handler:PropTypes.func.isRequired

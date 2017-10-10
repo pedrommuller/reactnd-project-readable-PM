@@ -81,7 +81,9 @@ class NewComment extends React.Component {
 
               <a onClick={(e)=>this.saveHandler(e)}
                 className="pure-button pure-button-primary align-right">
-                Post Comment
+                {
+                  isEmpty(this.props.comment)? <span>Post Comment</span>: <span>Edit Comment</span>
+                }
               </a>
 
             <br />

@@ -29,7 +29,6 @@ function editCommentAction(comment){
 }
 
 export function editCurrentComment(comment){
-  debugger;
   return function(dispatch){
     editComment(comment).then(
       response=>dispatch(editCommentAction(response))

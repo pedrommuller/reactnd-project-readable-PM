@@ -75,7 +75,8 @@ class Detail extends React.Component {
     const list = comments.length>0?
       comments.map((comment)=>
        <Comment handler={this.toogleModal}
-         key={comment.id} user={users[comment.author]} comment={comment} />
+         key={comment.id} canEdit={comment.author===this.props.currentUser}
+         user={users[comment.author]} comment={comment} />
     ):<div>No comments found</div>
 
     return (
@@ -111,7 +112,6 @@ class Detail extends React.Component {
 }
 
 function mapStateToProps(state){
-
   state.posts.comments.forEach(e=>{
     if(e.parentCommentId===null){
       e.parentCommentId = e.id;
@@ -130,7 +130,8 @@ function mapStateToProps(state){
     post:detail,
     comments: orderedComments,
     users:state.users.list,
-    categories:state.categories.list
+    categories:state.categories.list,
+    currentUser:state.users.current
   }
 }
 
