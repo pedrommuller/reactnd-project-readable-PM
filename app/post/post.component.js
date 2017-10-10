@@ -13,9 +13,13 @@ const Post = (props)=>(
   <div className="l-box box">
       <div className="pure-u-1-5 ">
         <div className="question-arrows">
-          <ArrowUpIcon />
+          <a onClick={()=>props.clickHandler(props.post.id,'upVote')}>
+              <ArrowUpIcon />
+          </a>
           <br/>
-          <ArrowDownIcon />
+          <a onClick={()=>props.clickHandler(props.post.id,'downVote')}>
+              <ArrowDownIcon />
+          </a>
         </div>
         <div className="question-vote">
           {props.post.voteScore} <br />
@@ -65,5 +69,6 @@ const Post = (props)=>(
 export default Post;
 
 Post.propTypes = {
-  post:PropTypes.object.isRequired
+  post:PropTypes.object.isRequired,
+  clickHandler:PropTypes.func.isRequired
 };

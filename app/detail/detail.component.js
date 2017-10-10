@@ -4,7 +4,7 @@ import {sortBy} from 'lodash/collection'
 import {isEmpty} from 'lodash/lang'
 
 import {getCategories} from '../nav/category.actions.js'
-import {getPostDetail} from './detail.actions'
+import {getPostDetail, votePostDetail} from './detail.actions'
 import Categories from '../nav/category.component'
 import UserList from '../nav/user.component'
 import Post from '../post/post.component'
@@ -16,6 +16,7 @@ class Detail extends React.Component {
   constructor(props){
     super(props);
     this.toogleModal = this.toogleModal.bind(this);
+    this.voteHandler = this.voteHandler.bind(this);
     this.state = {
       visible:false
     };
@@ -29,6 +30,12 @@ class Detail extends React.Component {
     const {match} = this.props;
     this.props.dispatch(
       getPostDetail(match.params.post_id)
+    );
+  }
+
+  voteHandler(postId,option){
+    this.props.dispatch(
+      votePostDetail(postId,option)
     );
   }
 
@@ -87,7 +94,7 @@ class Detail extends React.Component {
               <Categories list={categories} />
             </div>
             <div className="l-box pure-u-1 pure-u-md-2-6 pure-u-lg-3-5">
-              <Post handleAction={this.handleAction}  key={post.id} post={post} />
+              <Post clickHandler={this.voteHandler} handleAction={this.handleAction}  key={post.id} post={post} />
               <div>
                 List of comments:
                   <a className="pure-button pure-button-primary align-right"

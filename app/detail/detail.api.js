@@ -11,6 +11,15 @@ const headers = {
   'Authorization': token
 }
 
+export const votePost = (postId,option)=>
+    fetch(`${api}/posts/${postId}`, {
+    headers,
+    method:'POST',
+    body:JSON.stringify({option})
+  }).then(res => res.json())
+    .then(data =>data)
+
+
 export const editComment = (comment)=>
   fetch(`${api}/comments/${comment.id}`, {
     headers,

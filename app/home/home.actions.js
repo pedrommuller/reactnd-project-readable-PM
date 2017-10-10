@@ -1,4 +1,5 @@
 import {getAll, getAllByCategory, deletePost} from './home.api.js'
+import {votePost} from '../detail/detail.api.js'
 import {getCategories} from '../nav/category.actions.js'
 
 function postAction(posts){
@@ -19,6 +20,22 @@ function deletePostAction(id){
   return {
     type:'DELETE_POST',
     id:id
+  }
+}
+
+function votePostAction(detail){
+  return {
+    type:'VOTE_POST',
+    detail:detail
+
+  }
+}
+
+export function votePostHome(postId, option){
+  return function(dispatch){
+    votePost(postId,option).then(
+      response=>dispatch(votePostAction(response))
+    );
   }
 }
 

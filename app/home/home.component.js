@@ -3,7 +3,9 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {isEmpty} from 'lodash/lang'
 
-import {getHomeData, getPostsByCategory, deleteCurrentPost} from './home.actions'
+import {getHomeData, getPostsByCategory, deleteCurrentPost, votePostHome}
+from './home.actions'
+
 import Badge from '../shared/badge.component'
 import Categories from '../nav/category.component'
 import UserList from '../nav/user.component'
@@ -20,6 +22,7 @@ class Home extends React.Component {
     this.toogleState = this.toogleState.bind(this);
     this.getCategoryFronPath = this.getCategoryFromPath.bind(this);
     this.handleAction = this.handleAction.bind(this);
+    this.voteHandler = this.voteHandler.bind(this);
 
     this.props.history.listen((location, action)=>{
       if(location.state && location.state.routeType){
@@ -34,6 +37,12 @@ class Home extends React.Component {
     this.setState({
       visible: !this.state.visible
     });
+  }
+
+  voteHandler(postId,option){
+    this.props.dispatch(
+      votePostHome(postId,option)
+    );
   }
 
   handleAction(e, post, action){
@@ -67,7 +76,7 @@ class Home extends React.Component {
     const {user,posts, users, categories, match} = this.props;
     const postList = Object.values(posts).length>0?
       Object.values(posts).map((post)=>
-       <Post handleAction={this.handleAction}  key={post.id} post={post} />
+       <Post clickHandler={this.voteHandler} handleAction={this.handleAction}  key={post.id} post={post} />
     ):<div>No posts found</div>
 
     return (
