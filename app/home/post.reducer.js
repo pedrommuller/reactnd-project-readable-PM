@@ -6,6 +6,12 @@ const initialState = {
 
 export default function posts(state = initialState,action){
   switch (action.type) {
+    case 'ORDER_POSTS':
+      return {
+        ...state,
+        order:action.order
+      }
+
     case 'GET_POSTS':
       return {
         ...state,

@@ -2,8 +2,9 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {isEmpty} from 'lodash/lang'
+import {orderBy} from 'lodash/collection'
 
-import {getHomeData, getPostsByCategory, deleteCurrentPost, votePostHome}
+import {getHomeData, getPostsByCategory, deleteCurrentPost, votePostHome, OrderPostBy}
 from './home.actions'
 
 import Badge from '../shared/badge.component'
@@ -45,19 +46,21 @@ class Home extends React.Component {
     );
   }
 
-  handleAction(e, post, action){
+  handleAction(e, value, action){
     switch (action) {
       case 'edit':
         this.setState({
-          post:post
+          post:value
         });
         this.toogleState();
         break;
       case 'delete':
         if(confirm('Do you want to delete this post?')){
-          console.log(post.id);
-          this.props.dispatch(deleteCurrentPost(post.id))
+          this.props.dispatch(deleteCurrentPost(value.id))
         }
+        break;
+      case 'sortby':
+        this.props.dispatch(OrderPostBy(value));
         break;
     }
   }
@@ -101,7 +104,14 @@ class Home extends React.Component {
               <div>
                 {match.path!=='/' && match.params.category? `Home > ${this.getCategoryFromPath(match.params.category)}`:'Home'}
               </div>
+              <div className="sortby">
+                  Sort by:&nbsp;
+                  <input defaultChecked onClick={(e)=>{this.handleAction(e,"date","sortby")}} type="radio" value="Date" name="sortby" />Date
+                  &nbsp;
+                  <input onClick={(e)=>{this.handleAction(e,"score","sortby")}} type="radio" value="Score" name="sortby" />Score
+              </div>
               <h1>Posts:</h1>
+
               {
                 postList
               }
@@ -116,11 +126,9 @@ class Home extends React.Component {
   }
 }
 
-
 function mapStateToProps(state){
   let posts = Object.values(state.posts.list).map(
     e=> {
-
       return {
         ...e,
         ['initials']: state.users.list[e.author].initials,
@@ -128,6 +136,12 @@ function mapStateToProps(state){
       }
     }
   );
+
+  if(isEmpty(state.posts.order)||state.posts.order==='date'){
+    posts = orderBy(posts,['timestamp'],['desc']);
+  }else{
+    posts = orderBy(posts,['voteScore'],['desc']);
+  }
 
   const path = location.pathname.replace('/','');
   if(!isEmpty(path)){

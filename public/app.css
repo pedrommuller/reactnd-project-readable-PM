@@ -92,6 +92,11 @@ a:hover {
     text-align: center;
 }
 
+.sortby{
+  float: right;
+  padding: 0.5em,0,0.5em,0;
+}
+
 .comment-icons img{
   margin-left: 2em;
   margin-right: 0.5em;

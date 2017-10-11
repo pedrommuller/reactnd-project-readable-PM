@@ -31,6 +31,13 @@ function votePostAction(detail){
   }
 }
 
+export function OrderPostBy(order){
+  return {
+    type:'ORDER_POSTS',
+    order:order
+  }
+}
+
 export function votePostHome(postId, option){
   return function(dispatch){
     votePost(postId,option).then(
