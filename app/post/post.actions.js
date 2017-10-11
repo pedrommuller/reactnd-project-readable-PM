@@ -1,31 +1,31 @@
-import {savePost, editPost} from './post.api.js'
+import { savePost, editPost } from './post.api.js';
 
-function savePostAction(post){
+function savePostAction(post) {
   return {
-    type:'SAVE_POST',
-    post:post
-  }
+    type: 'SAVE_POST',
+    post,
+  };
 }
 
-function editPostAction(post){
+function editPostAction(post) {
   return {
-    type:'EDIT_POST',
-    post:post
-  }
+    type: 'EDIT_POST',
+    post,
+  };
 }
 
-export function editCurrentPost(post){
-  return function(dispatch){
+export function editCurrentPost(post) {
+  return function (dispatch) {
     editPost(post).then(
-      response=>dispatch(editPostAction(response))
+      response => dispatch(editPostAction(response))
     );
-  }
+  };
 }
 
-export function saveNewPost(post){
-  return function(dispatch){
+export function saveNewPost(post) {
+  return function (dispatch) {
     savePost(post).then(
-      response=> dispatch(savePostAction(response))
-    )
-  }
+      response => dispatch(savePostAction(response))
+    );
+  };
 }

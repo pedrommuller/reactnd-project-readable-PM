@@ -1,70 +1,63 @@
-import {getAll, getAllByCategory, deletePost} from './home.api.js'
-import {votePost} from '../detail/detail.api.js'
-import {getCategories} from '../nav/category.actions.js'
+import { getAllByCategory, deletePost } from './home.api.js';
+import { votePost } from '../detail/detail.api.js';
+import { getCategories } from '../nav/category.actions.js';
 
-function postAction(posts){
+function postByCategory(posts) {
   return {
-    type:'GET_POSTS',
-    posts:posts
-  }
+    type: 'GET_POSTS_BY_CATEGORY',
+    posts,
+  };
 }
 
-function postByCategory(posts){
+function deletePostAction(id) {
   return {
-    type:'GET_POSTS_BY_CATEGORY',
-    posts:posts
-  }
+    type: 'DELETE_POST',
+    id,
+  };
 }
 
-function deletePostAction(id){
+function votePostAction(detail) {
   return {
-    type:'DELETE_POST',
-    id:id
-  }
+    type: 'VOTE_POST',
+    detail,
+
+  };
 }
 
-function votePostAction(detail){
+export function orderPostBy(order) {
   return {
-    type:'VOTE_POST',
-    detail:detail
-
-  }
+    type: 'ORDER_POSTS',
+    order,
+  };
 }
 
-export function orderPostBy(order){
-  return {
-    type:'ORDER_POSTS',
-    order:order
-  }
-}
-
-export function votePostHome(postId, option){
-  return function(dispatch){
-    votePost(postId,option).then(
-      response=>dispatch(votePostAction(response))
+export function votePostHome(postId, option) {
+  return function (dispatch) {
+    votePost(postId, option).then(
+      response => dispatch(votePostAction(response))
     );
-  }
+  };
 }
 
-export function deleteCurrentPost(id){
-  return function(dispatch){
-    deletePost(id).then(response=>dispatch(
+export function deleteCurrentPost(id) {
+  return function (dispatch) {
+    deletePost(id).then(() => dispatch(
       deletePostAction(id)
-    ))
-  }
+    ));
+  };
 }
 
-export function getPostsByCategory(category){
-  return function(dispatch){
+export function getPostsByCategory(category) {
+  return function (dispatch) {
     getAllByCategory(category).then(
-      posts=>dispatch(postByCategory(posts))
-    )
-  }
+      posts => dispatch(postByCategory(posts))
+    );
+  };
 }
 
-export function getHomeData(category){
-    return function(dispatch){
-      dispatch(getCategories());
-      dispatch(getPostsByCategory(category));
-    }
+export function getHomeData(category) {
+  return function (dispatch) {
+    dispatch(getCategories());
+    dispatch(getPostsByCategory(category));
+  };
 }

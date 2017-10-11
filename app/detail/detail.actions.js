@@ -1,87 +1,87 @@
-import {getPost,getComments,saveComment, editComment, votePost, voteComment} from './detail.api.js'
+import { getPost, getComments, saveComment, editComment, votePost, voteComment } from './detail.api.js';
 
-function getPostAction(post){
+function getPostAction(post) {
   return {
-    type:'GET_POST',
-    detail:post
-  }
+    type: 'GET_POST',
+    detail: post,
+  };
 }
 
-function saveCommentAction(comment){
+function saveCommentAction(comment) {
   return {
-    type:'SAVE_COMMENT',
-    comment:comment
-  }
+    type: 'SAVE_COMMENT',
+    comment,
+  };
 }
 
-function getCommentsAction(comments){
-    return {
-      type:'GET_COMMENTS',
-      comments:comments
-    }
-}
-
-function editCommentAction(comment){
+function getCommentsAction(comments) {
   return {
-    type:'EDIT_COMMENT',
-    comment:comment
-  }
+    type: 'GET_COMMENTS',
+    comments,
+  };
 }
 
-function votePostDetailAction(detail){
+function editCommentAction(comment) {
   return {
-    type:'VOTE_POST_DETAIL',
-    detail:detail
-
-  }
+    type: 'EDIT_COMMENT',
+    comment,
+  };
 }
 
-function voteCommentAction(comment){
+function votePostDetailAction(detail) {
   return {
-    type:'VOTE_COMMENT',
-    comment:comment
-  }
+    type: 'VOTE_POST_DETAIL',
+    detail,
+
+  };
 }
 
-export function voteNewComment(postId, option){
-  return function(dispatch){
-    voteComment(postId,option).then(
-      response=>dispatch(voteCommentAction(response))
+function voteCommentAction(comment) {
+  return {
+    type: 'VOTE_COMMENT',
+    comment,
+  };
+}
+
+export function voteNewComment(postId, option) {
+  return function (dispatch) {
+    voteComment(postId, option).then(
+      response => dispatch(voteCommentAction(response))
     );
-  }
+  };
 }
 
-export function votePostDetail(postId, option){
-  return function(dispatch){
-    votePost(postId,option).then(
-      response=>dispatch(votePostDetailAction(response))
+export function votePostDetail(postId, option) {
+  return function (dispatch) {
+    votePost(postId, option).then(
+      response => dispatch(votePostDetailAction(response))
     );
-  }
+  };
 }
 
-export function editCurrentComment(comment){
-  return function(dispatch){
+export function editCurrentComment(comment) {
+  return function (dispatch) {
     editComment(comment).then(
-      response=>dispatch(editCommentAction(response))
+      response => dispatch(editCommentAction(response))
     );
-  }
+  };
 }
 
-export function saveNewComment(comment){
-  return function(dispatch){
+export function saveNewComment(comment) {
+  return function (dispatch) {
     saveComment(comment).then(
-      response=>dispatch(saveCommentAction(response))
+      response => dispatch(saveCommentAction(response))
     );
-  }
+  };
 }
 
 export function getPostDetail(id) {
-  return function(dispatch){
+  return function (dispatch) {
     getPost(id).then(
-      posts=>dispatch(getPostAction(posts))
+      posts => dispatch(getPostAction(posts))
     );
     getComments(id).then(
-      comments=>dispatch(getCommentsAction(comments))
+      comments => dispatch(getCommentsAction(comments))
     );
-  }
+  };
 }

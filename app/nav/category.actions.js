@@ -1,18 +1,18 @@
-import {getAll} from './category.api.js'
+import { getAll } from './category.api.js';
 
-function categoriesAction(categories){
+function categoriesAction(categories) {
   return {
-    type:'GET_CATEGORIES',
-    categories:categories
-  }
+    type: 'GET_CATEGORIES',
+    categories,
+  };
 }
 
-export function getCategories(){
-  return function(dispatch){
+export function getCategories() {
+  return function (dispatch) {
     return getAll().then(
-      categories=>{
-        dispatch(categoriesAction(categories))
+      categories => {
+        dispatch(categoriesAction(categories));
       }
-    )
-  }
+    );
+  };
 }
