@@ -27,7 +27,7 @@ class Home extends React.Component {
     this.handleAction = this.handleAction.bind(this);
     this.voteHandler = this.voteHandler.bind(this);
     this.setCurrentUser = this.setCurrentUser.bind(this);
-    
+
     this.props.history.listen((location, action)=>{
       if(location.state && location.state.routeType){
         this.props.dispatch(
@@ -67,7 +67,7 @@ class Home extends React.Component {
         }
         break;
       case 'sortby':
-        this.props.dispatch(OrderPostBy(value));
+        this.props.dispatch(orderPostBy(value));
         break;
     }
   }
