@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import TimeAgo from 'react-timeago'
 
-import ArrowUpIcon from './ArrowUp.icon'
-import ArrowDownIcon from './ArrowDown.icon'
-import CommentIcon from './Comment.icon'
-import EditIcon from './edit.icon'
-import BinIcon from './bin.icon'
+import ArrowUpIcon from './icons/arrowUp.icon'
+import ArrowDownIcon from './icons/arrowDown.icon'
+import CommentIcon from './icons/comment.icon'
+import EditIcon from './icons/edit.icon'
+import BinIcon from './icons/bin.icon'
 
 const Post = (props)=>(
   <div className="l-box box">

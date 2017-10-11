@@ -4,7 +4,7 @@ import {sortBy} from 'lodash/collection'
 import {isEmpty} from 'lodash/lang'
 
 import {getCategories} from '../nav/category.actions.js'
-import {getPostDetail, votePostDetail} from './detail.actions'
+import {getPostDetail, votePostDetail,voteNewComment} from './detail.actions'
 import Categories from '../nav/category.component'
 import UserList from '../nav/user.component'
 import Post from '../post/post.component'
@@ -66,6 +66,14 @@ class Detail extends React.Component {
             visible:true,
             comment:{}
           })
+          break;
+        case 'upVote':
+          this.props.dispatch(voteNewComment(comment,'upVote'))
+        break;
+        case 'downVote':
+          this.props.dispatch(voteNewComment(comment,'downVote'))
+        break;
+
       }
     }else{
       this.setState({

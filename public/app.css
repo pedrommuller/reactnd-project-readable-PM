@@ -92,6 +92,15 @@ a:hover {
     text-align: center;
 }
 
+.comment-icons img{
+  margin-left: 2em;
+  margin-right: 0.5em;
+}
+
+.comment-downVote{
+  margin-left: 0.1em!important;
+}
+
 .question-title{
   font-weight: bold;
 }

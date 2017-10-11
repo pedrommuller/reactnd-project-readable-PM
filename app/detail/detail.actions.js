@@ -1,4 +1,4 @@
-import {getPost,getComments,saveComment, editComment, votePost} from './detail.api.js'
+import {getPost,getComments,saveComment, editComment, votePost, voteComment} from './detail.api.js'
 
 function getPostAction(post){
   return {
@@ -33,6 +33,21 @@ function votePostDetailAction(detail){
     type:'VOTE_POST_DETAIL',
     detail:detail
 
+  }
+}
+
+function voteCommentAction(comment){
+  return {
+    type:'VOTE_COMMENT',
+    comment:comment
+  }
+}
+
+export function voteNewComment(postId, option){
+  return function(dispatch){
+    voteComment(postId,option).then(
+      response=>dispatch(voteCommentAction(response))
+    );
   }
 }
 

@@ -63,6 +63,13 @@ export default function posts(state = initialState,action){
         ...state,
         ['detail']:action.detail
       }
+    case 'VOTE_COMMENT':
+      return {
+          ...state,
+          ['comments']:state.comments.map((e,i)=>
+              e.id===action.comment.id?
+              action.comment:e)
+      }
     case 'GET_POST':
       return {
         ...state,
