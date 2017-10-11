@@ -31,7 +31,7 @@ function votePostAction(detail){
   }
 }
 
-export function OrderPostBy(order){
+export function orderPostBy(order){
   return {
     type:'ORDER_POSTS',
     order:order

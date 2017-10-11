@@ -100,5 +100,4 @@ export default function posts(state = initialState,action){
     default:
       return state;
   }
-  return state
 }

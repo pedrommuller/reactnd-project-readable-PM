@@ -4,8 +4,10 @@ import {Link} from 'react-router-dom'
 import {isEmpty} from 'lodash/lang'
 import {orderBy} from 'lodash/collection'
 
-import {getHomeData, getPostsByCategory, deleteCurrentPost, votePostHome, OrderPostBy}
+import {getHomeData, getPostsByCategory, deleteCurrentPost, votePostHome, orderPostBy}
 from './home.actions'
+
+import {setCurrentUser} from '../nav/user.actions'
 
 import Badge from '../shared/badge.component'
 import Categories from '../nav/category.component'
@@ -24,7 +26,8 @@ class Home extends React.Component {
     this.getCategoryFronPath = this.getCategoryFromPath.bind(this);
     this.handleAction = this.handleAction.bind(this);
     this.voteHandler = this.voteHandler.bind(this);
-
+    this.setCurrentUser = this.setCurrentUser.bind(this);
+    
     this.props.history.listen((location, action)=>{
       if(location.state && location.state.routeType){
         this.props.dispatch(
@@ -32,6 +35,10 @@ class Home extends React.Component {
         );
       }
     });
+  }
+
+  setCurrentUser(userId){
+    this.props.dispatch(setCurrentUser(userId));
   }
 
   toogleState(){
@@ -117,7 +124,7 @@ class Home extends React.Component {
               }
             </div>
             <div className="l-box pure-u-1 pure-u-md-1-6 pure-u-lg-1-5">
-              <UserList list={users} />
+              <UserList clickHandler={this.setCurrentUser} list={users} />
             </div>
           </div>
         </div>

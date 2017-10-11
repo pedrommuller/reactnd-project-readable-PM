@@ -11,9 +11,11 @@ const UserList = (props)=>(
           Object.values(props.list).map((e)=>
               <li key={e.initials+e.name}>
                 <Badge
+                   id={e.id}
                   color={e.color}
                   initials={e.initials}
-                  name={e.name} />
+                  name={e.name}
+                  clickHandler={props.clickHandler} />
               </li>
           )
         }
@@ -25,5 +27,6 @@ const UserList = (props)=>(
 export default UserList;
 
 UserList.PropTypes={
-  list:PropTypes.object.isRequired
+  list:PropTypes.object.isRequired,
+  clickHandler:PropTypes.func.isRequired
 }

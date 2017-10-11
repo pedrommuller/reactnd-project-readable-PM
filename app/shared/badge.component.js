@@ -8,7 +8,7 @@ export default class Badge extends React.Component {
   }
 
   render() {
-    const {color,initials, name, className} = this.props;
+    const {color,initials, name, className,id} = this.props;
     return (
       <div className={className}>
         <div className="badge-wrapper">
@@ -18,7 +18,7 @@ export default class Badge extends React.Component {
             }
           </div>
         </div>
-        <a href="#">{name}</a>
+        <a href="#" onClick={(e)=>{this.props.clickHandler?this.props.clickHandler(id):e.preventDefault()}}>{name}</a>
       </div>
     );
   }
