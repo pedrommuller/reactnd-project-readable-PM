@@ -12,6 +12,14 @@ const headers = {
   Authorization: token,
 };
 
+export const deleteComment = (commentId) =>
+fetch(`${api}/comments/${commentId}`, {
+  headers,
+  method: 'DELETE',
+  body: JSON.stringify({ commentId }),
+}).then(res => res.json())
+.then(data => data);
+
 export const voteComment = (commentId, option) =>
     fetch(`${api}/comments/${commentId}`, {
       headers,

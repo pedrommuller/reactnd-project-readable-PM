@@ -55,6 +55,11 @@ export default function posts(state = initialState, action) {
         ...state,
         list: state.list.filter(e => e.id !== action.id),
       };
+    case types.DELETE_COMMENT:
+      return {
+        ...state,
+        comments: state.comments.filter(e => e.id !== action.id),
+      };
     case types.GET_POSTS_BY_CATEGORY:
       return {
         ...state,

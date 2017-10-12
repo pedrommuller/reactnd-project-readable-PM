@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { sortBy } from 'lodash/collection';
 import { isEmpty } from 'lodash/lang';
 import { getCategories } from '../nav/category.actions.js';
-import { getPostDetail, votePostDetail, voteNewComment } from './detail.actions';
+import { getPostDetail, votePostDetail, voteNewComment, deleteCurrentComment } from './detail.actions';
 import { setCurrentUser } from '../nav/user.actions';
 import Categories from '../nav/category.component';
 import UserList from '../nav/user.component';
@@ -71,6 +71,12 @@ class Detail extends React.Component {
             visible: true,
             comment: {},
           });
+          break;
+        case 'delete':
+          if (confirm('do you want do delete this comment?')) {
+            this.props.dispatch(deleteCurrentComment(comment.id));
+          }
+
           break;
         case 'upVote':
           this.props.dispatch(voteNewComment(comment, 'upVote'));

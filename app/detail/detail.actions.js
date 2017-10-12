@@ -1,4 +1,4 @@
-import { getPost, getComments, saveComment, editComment, votePost, voteComment } from './detail.api.js';
+import * as API from './detail.api.js';
 import * as types from '../action.types';
 
 function getPostAction(post) {
@@ -44,9 +44,24 @@ function voteCommentAction(comment) {
   };
 }
 
+function deleteCommentAction(id) {
+  return {
+    type: types.DELETE_COMMENT,
+    id,
+  };
+}
+
+export function deleteCurrentComment(id) {
+  return function (dispatch) {
+    API.deleteComment(id).then(() => {
+      dispatch(deleteCommentAction(id));
+    });
+  };
+}
+
 export function voteNewComment(postId, option) {
   return function (dispatch) {
-    voteComment(postId, option).then(
+    API.voteComment(postId, option).then(
       response => dispatch(voteCommentAction(response))
     );
   };
@@ -54,7 +69,7 @@ export function voteNewComment(postId, option) {
 
 export function votePostDetail(postId, option) {
   return function (dispatch) {
-    votePost(postId, option).then(
+    API.votePost(postId, option).then(
       response => dispatch(votePostDetailAction(response))
     );
   };
@@ -62,7 +77,7 @@ export function votePostDetail(postId, option) {
 
 export function editCurrentComment(comment) {
   return function (dispatch) {
-    editComment(comment).then(
+    API.editComment(comment).then(
       response => dispatch(editCommentAction(response))
     );
   };
@@ -70,7 +85,7 @@ export function editCurrentComment(comment) {
 
 export function saveNewComment(comment) {
   return function (dispatch) {
-    saveComment(comment).then(
+    API.saveComment(comment).then(
       response => dispatch(saveCommentAction(response))
     );
   };
@@ -78,10 +93,10 @@ export function saveNewComment(comment) {
 
 export function getPostDetail(id) {
   return function (dispatch) {
-    getPost(id).then(
+    API.getPost(id).then(
       posts => dispatch(getPostAction(posts))
     );
-    getComments(id).then(
+    API.getComments(id).then(
       comments => dispatch(getCommentsAction(comments))
     );
   };

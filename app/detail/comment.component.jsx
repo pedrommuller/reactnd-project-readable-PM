@@ -6,6 +6,7 @@ import ReplyIcon from './icons/reply.icon';
 import EditIcon from './icons/edit.icon';
 import UpVoteIcon from './icons/upvote.icon';
 import DownVoteIcon from './icons/downvote.icon';
+import DeleteIcon from './icons/delete.icon';
 
 const Comment = (props) => {
   const className = props.comment.parentCommentId === props.comment.id ?
@@ -37,6 +38,8 @@ const Comment = (props) => {
          <div className="comment-icons" >
            <EditIcon />
            <a onClick={() => props.handler(props.comment, 'edit')}>[Edit]</a>
+           <DeleteIcon />
+           <a onClick={() => props.handler(props.comment, 'delete')}>[Delete]</a>
          </div>
        }
 
