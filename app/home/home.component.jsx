@@ -25,7 +25,7 @@ class Home extends React.Component {
     this.getCategoryFronPath = this.getCategoryFromPath.bind(this);
     this.handleAction = this.handleAction.bind(this);
     this.voteHandler = this.voteHandler.bind(this);
-    this.setCurrentUser = this.setCurrentUser.bind(this);
+    this.setUser = this.setUser.bind(this);
 
     this.props.history.listen((location) => {
       if (location.state && location.state.routeType) {
@@ -42,7 +42,7 @@ class Home extends React.Component {
     );
   }
 
-  setCurrentUser(userId) {
+  setUser(userId) {
     this.props.dispatch(setCurrentUser(userId));
   }
 
@@ -124,7 +124,7 @@ class Home extends React.Component {
               }
             </div>
             <div className="l-box pure-u-1 pure-u-md-1-6 pure-u-lg-1-5">
-              <UserList clickHandler={this.setCurrentUser} list={users} />
+              <UserList clickHandler={this.setUser} list={users} />
             </div>
           </div>
         </div>
