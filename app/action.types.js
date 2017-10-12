@@ -1,0 +1,15 @@
+export const GET_POST = 'GET_POST';
+export const GET_POSTS = 'GET_POSTS';
+export const SAVE_COMMENT = 'SAVE_COMMENT';
+export const GET_COMMENTS = 'GET_COMMENTS';
+export const EDIT_COMMENT = 'EDIT_COMMENT';
+export const VOTE_POST_DETAIL = 'VOTE_POST_DETAIL';
+export const VOTE_COMMENT = 'VOTE_COMMENT';
+export const GET_POSTS_BY_CATEGORY = 'GET_POSTS_BY_CATEGORY';
+export const DELETE_POST = 'DELETE_POST';
+export const VOTE_POST = 'VOTE_POST';
+export const ORDER_POSTS = 'ORDER_POSTS';
+export const GET_CATEGORIES = 'GET_CATEGORIES';
+export const SAVE_POST = 'SAVE_POST';
+export const EDIT_POST = 'EDIT_POST';
+export const SET_CURRENT_USER = 'SET_CURRENT_USER';

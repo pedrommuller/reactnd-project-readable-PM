@@ -1,24 +1,25 @@
-import { getAllByCategory, deletePost } from './home.api.js';
-import { votePost } from '../detail/detail.api.js';
-import { getCategories } from '../nav/category.actions.js';
+import { getAllByCategory, deletePost } from './home.api';
+import { votePost } from '../detail/detail.api';
+import { getCategories } from '../nav/category.actions';
+import * as types from '../action.types';
 
 function postByCategory(posts) {
   return {
-    type: 'GET_POSTS_BY_CATEGORY',
+    type: types.GET_POSTS_BY_CATEGORY,
     posts,
   };
 }
 
 function deletePostAction(id) {
   return {
-    type: 'DELETE_POST',
+    type: types.DELETE_POST,
     id,
   };
 }
 
 function votePostAction(detail) {
   return {
-    type: 'VOTE_POST',
+    type: types.VOTE_POST,
     detail,
 
   };
@@ -26,7 +27,7 @@ function votePostAction(detail) {
 
 export function orderPostBy(order) {
   return {
-    type: 'ORDER_POSTS',
+    type: types.ORDER_POSTS,
     order,
   };
 }

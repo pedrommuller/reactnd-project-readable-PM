@@ -1,36 +1,37 @@
 import { getPost, getComments, saveComment, editComment, votePost, voteComment } from './detail.api.js';
+import * as types from '../action.types';
 
 function getPostAction(post) {
   return {
-    type: 'GET_POST',
+    type: types.GET_POST,
     detail: post,
   };
 }
 
 function saveCommentAction(comment) {
   return {
-    type: 'SAVE_COMMENT',
+    type: types.SAVE_COMMENT,
     comment,
   };
 }
 
 function getCommentsAction(comments) {
   return {
-    type: 'GET_COMMENTS',
+    type: types.GET_COMMENTS,
     comments,
   };
 }
 
 function editCommentAction(comment) {
   return {
-    type: 'EDIT_COMMENT',
+    type: types.EDIT_COMMENT,
     comment,
   };
 }
 
 function votePostDetailAction(detail) {
   return {
-    type: 'VOTE_POST_DETAIL',
+    type: types.VOTE_POST_DETAIL,
     detail,
 
   };
@@ -38,7 +39,7 @@ function votePostDetailAction(detail) {
 
 function voteCommentAction(comment) {
   return {
-    type: 'VOTE_COMMENT',
+    type: types.VOTE_COMMENT,
     comment,
   };
 }

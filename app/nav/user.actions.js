@@ -1,6 +1,8 @@
+import * as types from '../action.types';
+
 export function setCurrentUser(currentUser) {
   return {
-    type: 'SET_CURRENT_USER',
+    type: types.SET_CURRENT_USER,
     current: currentUser,
   };
 }

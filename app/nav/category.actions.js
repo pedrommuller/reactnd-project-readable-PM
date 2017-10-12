@@ -1,8 +1,9 @@
 import { getAll } from './category.api.js';
+import * as types from '../action.types';
 
 function categoriesAction(categories) {
   return {
-    type: 'GET_CATEGORIES',
+    type: types.GET_CATEGORIES,
     categories,
   };
 }

@@ -7,6 +7,7 @@ This is the final assessment project for Udacity's React redux course, developed
 - webpack-hot-middleware
 - One module server only, the server renders a view that contains the bundle file
 - Implemented [pureCSS](https://purecss.io/) as css framework
+- Multi user application (users are hardcoded)
 
 ## Installation
 

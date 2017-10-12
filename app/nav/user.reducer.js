@@ -1,3 +1,5 @@
+import * as types from '../action.types';
+
 const list = {
   1: {
     id: '1',
@@ -32,7 +34,7 @@ const initialState = {
 
 export default function users(state = initialState, action) {
   switch (action.type) {
-    case 'SET_CURRENT_USER':
+    case types.SET_CURRENT_USER:
       return {
         ...state,
         current: action.current,

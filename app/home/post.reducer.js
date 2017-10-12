@@ -1,3 +1,5 @@
+import * as types from '../action.types';
+
 const initialState = {
   list: {},
   detail: {},
@@ -6,24 +8,24 @@ const initialState = {
 
 export default function posts(state = initialState, action) {
   switch (action.type) {
-    case 'ORDER_POSTS':
+    case types.ORDER_POSTS:
       return {
         ...state,
         order: action.order,
       };
 
-    case 'GET_POSTS':
+    case types.GET_POSTS:
       return {
         ...state,
         list: action.posts,
       };
-    case 'SAVE_POST':
+    case types.SAVE_POST:
       return {
         ...state,
         list:
             [...[action.post], ...state.list],
       };
-    case 'EDIT_POST':
+    case types.EDIT_POST:
       return {
         ...state,
         list: state.list.map((e, i) => (
@@ -36,7 +38,7 @@ export default function posts(state = initialState, action) {
           } : e)
         ),
       };
-    case 'EDIT_COMMENT':
+    case types.EDIT_COMMENT:
       return {
         ...state,
         comments: state.comments.map((e, i) => (
@@ -48,17 +50,17 @@ export default function posts(state = initialState, action) {
           } : e)
         ),
       };
-    case 'DELETE_POST':
+    case types.DELETE_POST:
       return {
         ...state,
         list: state.list.filter(e => e.id !== action.id),
       };
-    case 'GET_POSTS_BY_CATEGORY':
+    case types.GET_POSTS_BY_CATEGORY:
       return {
         ...state,
         list: action.posts,
       };
-    case 'VOTE_POST':
+    case types.VOTE_POST:
       return {
         ...state,
         list: state.list.map((e) => (
@@ -67,12 +69,12 @@ export default function posts(state = initialState, action) {
               )
             ),
       };
-    case 'VOTE_POST_DETAIL':
+    case types.VOTE_POST_DETAIL:
       return {
         ...state,
         detail: action.detail,
       };
-    case 'VOTE_COMMENT':
+    case types.VOTE_COMMENT:
       return {
         ...state,
         comments: state.comments.map((e) => (
@@ -81,19 +83,19 @@ export default function posts(state = initialState, action) {
             )
         ),
       };
-    case 'GET_POST':
+    case types.GET_POST:
       return {
         ...state,
         detail: action.detail,
       };
 
-    case 'GET_COMMENTS':
+    case types.GET_COMMENTS:
       return {
         ...state,
         comments: action.comments,
       };
 
-    case 'SAVE_COMMENT':
+    case types.SAVE_COMMENT:
       return {
         ...state,
         comments: [

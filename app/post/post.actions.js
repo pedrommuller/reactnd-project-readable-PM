@@ -1,15 +1,16 @@
+import * as types from '../action.types';
 import { savePost, editPost } from './post.api.js';
 
 function savePostAction(post) {
   return {
-    type: 'SAVE_POST',
+    type: types.SAVE_POST,
     post,
   };
 }
 
 function editPostAction(post) {
   return {
-    type: 'EDIT_POST',
+    type: types.EDIT_POST,
     post,
   };
 }
