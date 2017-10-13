@@ -68,4 +68,5 @@ export const getPost = (id) =>
       headers,
       method: 'GET',
     }).then(res => res.json())
-      .then(data => data);
+      .then(data => data)
+      .catch(err => err);

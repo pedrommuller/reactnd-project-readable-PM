@@ -1,20 +1,16 @@
 /* global document:false, window:false */
-
-import 'purecss/build/pure-min.css';
-import 'purecss/build/grids-responsive-min.css';
-import '../public/app.css';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Route } from 'react-router-dom';
-import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import createHistory from 'history/createBrowserHistory';
 import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux';
-
+import 'purecss/build/pure-min.css';
+import 'purecss/build/grids-responsive-min.css';
+import '../public/app.css';
 import reducers from './reducers';
-
 import Header from './shared/header.component';
 import Footer from './shared/footer.component';
 import Home from './home/home.component';

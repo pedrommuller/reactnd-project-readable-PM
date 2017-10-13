@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
 import PropTypes from 'prop-types';
 import { sortBy } from 'lodash/collection';
 import { isEmpty } from 'lodash/lang';
 import { getCategories } from '../nav/category.actions.js';
-import { getPostDetail, votePostDetail, voteNewComment, deleteCurrentComment } from './detail.actions';
+import * as actions from './detail.actions';
 import { setCurrentUser } from '../nav/user.actions';
 import Categories from '../nav/category.component';
 import UserList from '../nav/user.component';
@@ -13,8 +14,8 @@ import Comment from './comment.component';
 import NewComment from './new.component';
 
 class Detail extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor(props, history) {
+    super(props, history);
     this.toogleModal = this.toogleModal.bind(this);
     this.voteHandler = this.voteHandler.bind(this);
     this.setUser = this.setUser.bind(this);
@@ -24,24 +25,23 @@ class Detail extends React.Component {
   }
 
   componentDidMount() {
-    if (isEmpty(this.props.categories)) {
+    const { match, categories } = this.props;
+    this.props.dispatch(
+      actions.getPostDetail(match.params.post_id)
+    );
+    if (isEmpty(categories)) {
       this.props.dispatch(getCategories());
     }
-
-    const { match } = this.props;
-    this.props.dispatch(
-      getPostDetail(match.params.post_id)
-    );
-  }
-
-  voteHandler(postId, option) {
-    this.props.dispatch(
-      votePostDetail(postId, option)
-    );
   }
 
   setUser(userId) {
     this.props.dispatch(setCurrentUser(userId));
+  }
+
+  voteHandler(postId, option) {
+    this.props.dispatch(
+      actions.votePostDetail(postId, option)
+    );
   }
 
   toogleModal(comment, action) {
@@ -73,16 +73,13 @@ class Detail extends React.Component {
           });
           break;
         case 'delete':
-          if (confirm('do you want do delete this comment?')) {
-            this.props.dispatch(deleteCurrentComment(comment.id));
-          }
-
+          this.props.dispatch(actions.deleteCurrentComment(comment.id));
           break;
         case 'upVote':
-          this.props.dispatch(voteNewComment(comment, 'upVote'));
+          this.props.dispatch(actions.voteNewComment(comment, 'upVote'));
           break;
         case 'downVote':
-          this.props.dispatch(voteNewComment(comment, 'downVote'));
+          this.props.dispatch(actions.voteNewComment(comment, 'downVote'));
           break;
         default:
           break;
@@ -97,7 +94,6 @@ class Detail extends React.Component {
     }
   }
 
-
   render() {
     const { users, categories, post, comments } = this.props;
     const list = comments.length > 0 ?
@@ -108,57 +104,63 @@ class Detail extends React.Component {
           user={users[comment.author]} comment={comment}
         />
     ) : <div>No comments found</div>;
-
-    return (
+    const notFound = post.fetched && !post.hasOwnProperty('id');
+    return notFound ? (
       <div className="content-wrapper">
-        <div className="content">
-          <div className="pure-g">
-            <div className="l-box pure-u-1 pure-u-md-1-6 pure-u-lg-1-5">
-              <Categories list={categories} />
-            </div>
-            <div className="l-box pure-u-1 pure-u-md-2-6 pure-u-lg-3-5">
-              <Post clickHandler={this.voteHandler} handleAction={this.handleAction} key={post.id} post={post} />
-              <div>
+        <div className="content">Post not found</div>
+      </div>) :
+    (<div className="content-wrapper">
+      <div className="content">
+        <div className="pure-g">
+          <div className="l-box pure-u-1 pure-u-md-1-6 pure-u-lg-1-5">
+            <Categories list={categories} />
+          </div>
+          <div className="l-box pure-u-1 pure-u-md-2-6 pure-u-lg-3-5">
+            <Post clickHandler={this.voteHandler} handleAction={this.handleAction} key={post.id} post={post} />
+            <div>
                 List of comments:
                   <a
                     className="pure-button pure-button-primary align-right"
                     onClick={() => this.toogleModal(null, 'new')}
                   >Add comment</a>
-                {list}
-              </div>
+              {list}
+            </div>
 
-            </div>
-            <div className="l-box pure-u-1 pure-u-md-1-6 pure-u-lg-1-5">
-              <UserList clickHandler={this.setUser} list={users} />
-            </div>
+          </div>
+          <div className="l-box pure-u-1 pure-u-md-1-6 pure-u-lg-1-5">
+            <UserList clickHandler={this.setUser} list={users} />
           </div>
         </div>
-        {
+      </div>
+      {
           this.state.visible && (
             <NewComment
               comment={this.state.comment} parentId={this.state.parentId}
               commentId={this.state.commentId} close={this.toogleModal}
             />)
         }
-      </div>
+    </div>
     );
   }
 }
 
 function mapStateToProps(state) {
+  console.log('mapStateToProps', state);
+
   state.posts.comments.forEach(e => {
     if (e.parentCommentId === null) {
       e.parentCommentId = e.id;
     }
   });
 
-  const detail = !isEmpty(state.posts.detail) ? {
+  const detail = !isEmpty(state.posts.detail.id) ? {
     ...state.posts.detail,
     initials: state.users.list[state.posts.detail.author].initials,
     canEdit: false,
-  } : {};
+  } : { ...state.posts.detail };
   const orderedComments = sortBy(state.posts.comments, (e) => e.parentCommentId);
   detail.comments = orderedComments.length;
+
 
   return {
     post: detail,

@@ -93,11 +93,10 @@ export function saveNewComment(comment) {
 
 export function getPostDetail(id) {
   return function (dispatch) {
-    API.getPost(id).then(
-      posts => dispatch(getPostAction(posts))
-    );
-    API.getComments(id).then(
-      comments => dispatch(getCommentsAction(comments))
-    );
+    Promise.all([API.getPost(id), API.getComments(id)]).then(values => {
+      values[0].fetched = true;
+      dispatch(getPostAction(values[0]));
+      dispatch(getCommentsAction(values[1]));
+    });
   };
 }
