@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import TimeAgo from 'react-timeago';
-
 import ArrowUpIcon from './icons/arrowUp.icon';
 import ArrowDownIcon from './icons/arrowDown.icon';
 import CommentIcon from './icons/comment.icon';

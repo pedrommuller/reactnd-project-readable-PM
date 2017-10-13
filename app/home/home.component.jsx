@@ -1,18 +1,17 @@
 /* global location:false */
-
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { isEmpty } from 'lodash/lang';
 import { orderBy } from 'lodash/collection';
 import PropTypes from 'prop-types';
-import { setCurrentUser } from '../nav/user.actions';
 import Badge from '../shared/badge.component';
 import Categories from '../nav/category.component';
 import UserList from '../nav/user.component';
 import Post from '../post/post.component';
 import NewPost from '../post/new.component';
-import { getHomeData, getPostsByCategory, deleteCurrentPost, votePostHome, orderPostBy }
-from './home.actions';
+import { setCurrentUser } from '../nav/user.actions';
+import * as homeActions from './home.actions';
 
 class Home extends React.Component {
   constructor(props) {
@@ -29,21 +28,17 @@ class Home extends React.Component {
 
     this.props.history.listen((location) => {
       if (location.state && location.state.routeType) {
-        this.props.dispatch(
-          getPostsByCategory(location.pathname.replace('/', ''))
-        );
+        this.props.actions.getPostsByCategory(location.pathname.replace('/', ''));
       }
     });
   }
 
   componentDidMount() {
-    this.props.dispatch(
-      getHomeData(location.pathname.replace('/', ''))
-    );
+    this.props.actions.getHomeData(location.pathname.replace('/', ''));
   }
 
   setUser(userId) {
-    this.props.dispatch(setCurrentUser(userId));
+    this.props.actions.setCurrentUser(userId);
   }
 
   getCategoryFromPath(path) {
@@ -60,11 +55,11 @@ class Home extends React.Component {
         break;
       case 'delete':
         if (confirm('Do you want to delete this post?')) { // eslint-disable-line no-alert
-          this.props.dispatch(deleteCurrentPost(value.id));
+          this.props.actions.deleteCurrentPost(value.id);
         }
         break;
       case 'sortby':
-        this.props.dispatch(orderPostBy(value));
+        this.props.actions.orderPostBy(value);
         break;
       default:
         break;
@@ -78,9 +73,7 @@ class Home extends React.Component {
   }
 
   voteHandler(postId, option) {
-    this.props.dispatch(
-      votePostHome(postId, option)
-    );
+    this.props.actions.votePostHome(postId, option);
   }
   render() {
     const { user, posts, users, categories, match } = this.props;
@@ -161,6 +154,10 @@ function mapStateToProps(state) {
   };
 }
 
+function mapDispatchToProps(dispatch) {
+  return { actions: bindActionCreators({ ...homeActions, setCurrentUser }, dispatch) };
+}
+
 Home.propTypes = {
   dispatch: PropTypes.func,
   match: PropTypes.object,
@@ -169,6 +166,7 @@ Home.propTypes = {
   user: PropTypes.object,
   users: PropTypes.object,
   posts: PropTypes.array,
+  actions: PropTypes.object,
 };
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

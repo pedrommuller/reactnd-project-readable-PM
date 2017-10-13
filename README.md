@@ -20,6 +20,11 @@ npm install
 ```sh
 npm start
 ```
+```sh
+This application runs on port 3001 (http://localhost:3001)
+```
+
+
 ### Get Started Immediately
 
 You **don’t** need to install or configure tools like Webpack or Babel.<br>

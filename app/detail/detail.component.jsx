@@ -1,11 +1,11 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
 import PropTypes from 'prop-types';
 import { sortBy } from 'lodash/collection';
 import { isEmpty } from 'lodash/lang';
 import { getCategories } from '../nav/category.actions.js';
-import * as actions from './detail.actions';
+import * as detailActions from './detail.actions';
 import { setCurrentUser } from '../nav/user.actions';
 import Categories from '../nav/category.component';
 import UserList from '../nav/user.component';
@@ -26,27 +26,23 @@ class Detail extends React.Component {
 
   componentDidMount() {
     const { match, categories } = this.props;
-    this.props.dispatch(
-      actions.getPostDetail(match.params.post_id)
-    );
+    this.props.actions.getPostDetail(match.params.post_id);
     if (isEmpty(categories)) {
-      this.props.dispatch(getCategories());
+      this.props.actions.getCategories();
     }
   }
 
   setUser(userId) {
-    this.props.dispatch(setCurrentUser(userId));
+    this.props.actions.setCurrentUser(userId);
   }
 
   voteHandler(postId, option) {
-    this.props.dispatch(
-      actions.votePostDetail(postId, option)
-    );
+    this.props.actions.votePostDetail(postId, option);
   }
 
   toogleModal(comment, action) {
     if (!this.state.visible) {
-      const { match } = this.props;
+      const { match, actions } = this.props;
       switch (action) {
         case 'reply':
           this.setState({
@@ -73,13 +69,13 @@ class Detail extends React.Component {
           });
           break;
         case 'delete':
-          this.props.dispatch(actions.deleteCurrentComment(comment.id));
+          actions.deleteCurrentComment(comment.id);
           break;
         case 'upVote':
-          this.props.dispatch(actions.voteNewComment(comment, 'upVote'));
+          actions.voteNewComment(comment, 'upVote');
           break;
         case 'downVote':
-          this.props.dispatch(actions.voteNewComment(comment, 'downVote'));
+          actions.voteNewComment(comment, 'downVote');
           break;
         default:
           break;
@@ -145,8 +141,6 @@ class Detail extends React.Component {
 }
 
 function mapStateToProps(state) {
-  console.log('mapStateToProps', state);
-
   state.posts.comments.forEach(e => {
     if (e.parentCommentId === null) {
       e.parentCommentId = e.id;
@@ -177,8 +171,13 @@ Detail.propTypes = {
   users: PropTypes.object,
   categories: PropTypes.array,
   currentUser: PropTypes.string,
-  dispatch: PropTypes.func,
   match: PropTypes.object,
+  actions: PropTypes.object,
 };
 
-export default connect(mapStateToProps)(Detail);
+
+function mapDispatchToProps(dispatch) {
+  return { actions: bindActionCreators({ ...detailActions, setCurrentUser, getCategories }, dispatch) };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Detail);
