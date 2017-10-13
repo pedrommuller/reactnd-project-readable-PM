@@ -19,6 +19,7 @@ class Detail extends React.Component {
     this.toogleModal = this.toogleModal.bind(this);
     this.voteHandler = this.voteHandler.bind(this);
     this.setUser = this.setUser.bind(this);
+    this.handleAction = this.handleAction.bind(this);
     this.state = {
       visible: false,
     };
@@ -38,6 +39,25 @@ class Detail extends React.Component {
 
   voteHandler(postId, option) {
     this.props.actions.votePostDetail(postId, option);
+  }
+
+  handleAction(e, value, action) {
+    switch (action) {
+      case 'edit':
+        this.setState({
+          post: value,
+        });
+        this.toogleState();
+        break;
+      case 'delete':
+        if (confirm('Do you want to delete this post?')) { // eslint-disable-line no-alert
+          this.props.actions.deleteCurrentPost(value.id);
+          this.props.history.push('/');
+        }
+        break;
+      default:
+        break;
+    }
   }
 
   toogleModal(comment, action) {
@@ -150,7 +170,7 @@ function mapStateToProps(state) {
   const detail = !isEmpty(state.posts.detail.id) ? {
     ...state.posts.detail,
     initials: state.users.list[state.posts.detail.author].initials,
-    canEdit: false,
+    canEdit: state.posts.detail.author === state.users.current,
   } : { ...state.posts.detail };
   const orderedComments = sortBy(state.posts.comments, (e) => e.parentCommentId);
   detail.comments = orderedComments.length;
@@ -173,6 +193,7 @@ Detail.propTypes = {
   currentUser: PropTypes.string,
   match: PropTypes.object,
   actions: PropTypes.object,
+  history: PropTypes.object,
 };
 
 

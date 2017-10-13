@@ -14,3 +14,4 @@ export const SAVE_POST = 'SAVE_POST';
 export const EDIT_POST = 'EDIT_POST';
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
+export const DELETE_POST_DETAIL = 'DELETE_POST_DETAIL';

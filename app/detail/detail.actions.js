@@ -1,3 +1,4 @@
+import { deletePost } from '../home/home.api.js';
 import * as API from './detail.api.js';
 import * as types from '../action.types';
 
@@ -48,6 +49,21 @@ function deleteCommentAction(id) {
   return {
     type: types.DELETE_COMMENT,
     id,
+  };
+}
+
+function deletePostAction(id){
+  return {
+    type: types.DELETE_POST_DETAIL,
+    id
+  }
+}
+
+export function deleteCurrentPost(id) {
+  return function (dispatch) {
+    deletePost(id).then(() => dispatch(
+      deletePostAction(id)
+    ));
   };
 }
 
