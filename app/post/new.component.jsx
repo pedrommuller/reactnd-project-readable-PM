@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Guid from 'guid';
 import { isEmpty } from 'lodash/lang';
-import { saveNewPost, editCurrentPost } from './post.actions';
+import Guid from 'guid';
+import * as actions from './post.actions';
 import Badge from '../shared/badge.component';
 
 class New extends React.Component {
@@ -48,9 +49,13 @@ class New extends React.Component {
           timestamp: this.props.post.timestamp,
           ...this.state,
         };
-        this.props.dispatch(editCurrentPost(post));
+        if (this.props.location === 'home') {
+          this.props.actions.editCurrentPost(post);
+        } else {
+          this.props.actions.editPostDetail(post);
+        }
       } else {
-        this.props.dispatch(saveNewPost(post));
+        this.props.actions.saveNewPost(post);
       }
 
       this.props.close();
@@ -113,9 +118,14 @@ New.propTypes = {
   post: PropTypes.object,
   currentUser: PropTypes.string,
   categories: PropTypes.array,
-  dispatch: PropTypes.func,
   user: PropTypes.object,
+  actions: PropTypes.object,
+  location: PropTypes.string,
 };
+
+function mapDispatchToProps(dispatch) {
+  return { actions: bindActionCreators({ ...actions }, dispatch) };
+}
 
 function mapStateToProps(state) {
   return {
@@ -125,4 +135,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(New);
+export default connect(mapStateToProps, mapDispatchToProps)(New);

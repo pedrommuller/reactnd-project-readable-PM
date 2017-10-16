@@ -25,6 +25,11 @@ export default function posts(state = initialState, action) {
         list:
             [...[action.post], ...state.list],
       };
+    case types.EDIT_POST_DETAIL:
+      return {
+        ...state,
+        detail: action.post,
+      };
     case types.EDIT_POST:
       return {
         ...state,

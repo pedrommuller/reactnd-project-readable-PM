@@ -99,7 +99,7 @@ class Home extends React.Component {
                 </h2>
               </div>
               {
-                this.state.visible && <NewPost post={this.state.post} close={this.toogleState} />
+                this.state.visible && <NewPost location="home" post={this.state.post} close={this.toogleState} />
               }
               <div>
                 {match.path !== '/' && match.params.category ? `Home > ${this.getCategoryFromPath(match.params.category)}` : 'Home'}

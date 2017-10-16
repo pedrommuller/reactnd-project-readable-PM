@@ -5,13 +5,14 @@ import PropTypes from 'prop-types';
 import { sortBy } from 'lodash/collection';
 import { isEmpty } from 'lodash/lang';
 import { getCategories } from '../nav/category.actions.js';
-import * as detailActions from './detail.actions';
 import { setCurrentUser } from '../nav/user.actions';
+import * as detailActions from './detail.actions';
 import Categories from '../nav/category.component';
 import UserList from '../nav/user.component';
 import Post from '../post/post.component';
 import Comment from './comment.component';
 import NewComment from './new.component';
+import NewPost from '../post/new.component';
 
 class Detail extends React.Component {
   constructor(props, history) {
@@ -20,16 +21,18 @@ class Detail extends React.Component {
     this.voteHandler = this.voteHandler.bind(this);
     this.setUser = this.setUser.bind(this);
     this.handleAction = this.handleAction.bind(this);
+    this.toogleState = this.toogleState.bind(this);
     this.state = {
       visible: false,
+      editVisible: false,
     };
   }
 
   componentDidMount() {
-    const { match, categories } = this.props;
-    this.props.actions.getPostDetail(match.params.post_id);
+    const { match, categories, actions } = this.props;
+    actions.getPostDetail(match.params.post_id);
     if (isEmpty(categories)) {
-      this.props.actions.getCategories();
+      actions.getCategories();
     }
   }
 
@@ -58,6 +61,12 @@ class Detail extends React.Component {
       default:
         break;
     }
+  }
+
+  toogleState() {
+    this.setState({
+      editVisible: !this.state.editVisible,
+    });
   }
 
   toogleModal(comment, action) {
@@ -148,6 +157,11 @@ class Detail extends React.Component {
           </div>
         </div>
       </div>
+      {
+        this.state.editVisible && (
+          <NewPost location="detail" post={this.state.post} close={this.toogleState} />
+        )
+      }
       {
           this.state.visible && (
             <NewComment

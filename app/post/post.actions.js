@@ -15,6 +15,21 @@ function editPostAction(post) {
   };
 }
 
+function editPostDetailAction(post) {
+  return {
+    type: types.EDIT_POST_DETAIL,
+    post,
+  };
+}
+
+export function editPostDetail(post) {
+  return function (dispatch) {
+    editPost(post).then(
+      response => dispatch(editPostDetailAction(response))
+    );
+  };
+}
+
 export function editCurrentPost(post) {
   return function (dispatch) {
     editPost(post).then(
