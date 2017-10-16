@@ -1,10 +1,10 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Guid from 'guid';
 import { isEmpty } from 'lodash/lang';
-
-import { saveNewComment, editCurrentComment } from './detail.actions';
+import Guid from 'guid';
+import * as actions from './detail.actions';
 import Badge from '../shared/badge.component';
 
 class NewComment extends React.Component {
@@ -49,7 +49,7 @@ class NewComment extends React.Component {
           parentCommentId: this.props.commentId,
           body: this.state.comment.body,
         };
-        this.props.dispatch(saveNewComment(comment));
+        this.props.saveNewComment(comment);
       } else {
         comment = {
           id: this.props.comment.id,
@@ -59,7 +59,7 @@ class NewComment extends React.Component {
           parentId: this.props.parentId,
           parentCommentId: this.props.commentId,
         };
-        this.props.dispatch(editCurrentComment(comment));
+        this.props.editCurrentComment(comment);
       }
       this.props.close();
     }
@@ -96,6 +96,10 @@ class NewComment extends React.Component {
   }
 }
 
+function mapDispatchToProps(dispatch) {
+  return { actions: bindActionCreators({ ...actions }, dispatch) };
+}
+
 function mapStateToProps(state) {
   return {
     user: state.users.list[state.users.current],
@@ -103,7 +107,7 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(NewComment);
+export default connect(mapStateToProps, mapDispatchToProps)(NewComment);
 
 NewComment.propTypes = {
   close: PropTypes.func.isRequired,
@@ -112,5 +116,6 @@ NewComment.propTypes = {
   user: PropTypes.object,
   parentId: PropTypes.string,
   commentId: PropTypes.string,
-  dispatch: PropTypes.func,
+  editCurrentComment: PropTypes.func,
+  saveNewComment: PropTypes.func,
 };
