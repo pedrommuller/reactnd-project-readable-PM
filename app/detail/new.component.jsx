@@ -49,7 +49,7 @@ class NewComment extends React.Component {
           parentCommentId: this.props.commentId,
           body: this.state.comment.body,
         };
-        this.props.saveNewComment(comment);
+        this.props.actions.saveNewComment(comment);
       } else {
         comment = {
           id: this.props.comment.id,
@@ -59,7 +59,7 @@ class NewComment extends React.Component {
           parentId: this.props.parentId,
           parentCommentId: this.props.commentId,
         };
-        this.props.editCurrentComment(comment);
+        this.props.actions.editCurrentComment(comment);
       }
       this.props.close();
     }
@@ -116,6 +116,5 @@ NewComment.propTypes = {
   user: PropTypes.object,
   parentId: PropTypes.string,
   commentId: PropTypes.string,
-  editCurrentComment: PropTypes.func,
-  saveNewComment: PropTypes.func,
+  actions: PropTypes.object,
 };
